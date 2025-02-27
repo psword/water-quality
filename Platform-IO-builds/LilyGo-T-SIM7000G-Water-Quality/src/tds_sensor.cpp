@@ -50,7 +50,7 @@ void TdsSensor::analogReadAction()
 {
     adcTDS.setCompareChannels(sensorInputMux); // Ensure correct channel is selected; uncomment if needed
     float sensorValue = adcTDS.getRawResult();
-    Serial.println(sensorValue);
+    // Serial.println(sensorValue);
     analogBuffer[analogBufferIndex] = sensorValue;
     analogBufferIndex = (analogBufferIndex + 1) % tdsSenseIterations; // Circular buffer
 }

@@ -58,7 +58,7 @@ void pHSensor::analogReadAction()
 
     adcPH.setCompareChannels(sensorInputMux); // Ensure correct channel is selected; uncomment if needed
     float sensorValue = adcPH.getRawResult();
-    Serial.println(sensorValue);
+    // Serial.println(sensorValue);
     // Store the voltage value in the circular buffer
     analogBuffer[analogBufferIndex] = sensorValue;
 

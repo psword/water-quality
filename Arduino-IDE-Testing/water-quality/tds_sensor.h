@@ -6,9 +6,6 @@
 
 #define I2C_ADDRESS_TDS 0x4A                 // I2C address for the TDS sensor through the ADS1115
 
-// Declare the ADS1115 object as an external variable (defined in tds_sensor.cpp)
-extern ADS1115_WE adcTDS;
-
 /**
  * TdsSensor class to read TDS (Total Dissolved Solids) data.
  */
@@ -18,10 +15,8 @@ private:
     const float kCoefficient;     // 2% Coefficient calculation
     const float referenceTemp;    // Reference temperature for the TDS sensor
     const int tdsSenseIterations; // Number of measurements to retain for buffer
-    const float maxADCValue;      // ADC bits
     const ADS1115_MUX sensorInputMux; // ADC multiplexer input for TDS sensor
 
-    float VC;                      // The voltage on the pin powering the sensor
     float *analogBuffer;           // Dynamic array for buffer
     int analogBufferIndex;         // Index for the circular buffer
 
@@ -29,7 +24,7 @@ public:
     /**
      * Constructor for TdsSensor.
      */
-    TdsSensor(float voltageConstant, float kCoeff, float refTemp, float maxADC, ADS1115_MUX inputMux, int iterations = 10);
+    TdsSensor(float kCoeff, float refTemp, ADS1115_MUX inputMux, int iterations = 10);
 
     /**
      * Destructor for TdsSensor.

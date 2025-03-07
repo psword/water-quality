@@ -33,11 +33,11 @@ void goToDeepSleep();
 // Temperature Sensor: Specify OneWire PIN and the number of samples in the buffer
 TemperatureSensor tempSensorInstance(ONE_WIRE_BUS);
 
-// TDS Sensor: Specify voltage, kCoefficient, reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
-TdsSensor tdsSensorInstance(3.3, 0.02, 25.0, ADC_BITS, TDS_SENSOR_MUX, 15);
+// TDS Sensor: Specify kCoefficient, reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
+TdsSensor tdsSensorInstance(0.02, 25.0, TDS_SENSOR_MUX, 15);
 
-// pH Sensor: Specify voltage (in mV), reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
-pHSensor pHSensorInstance(3300, 25.0, ADC_BITS, PH_SENSOR_MUX, 15);
+// pH Sensor: reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
+pHSensor pHSensorInstance(PH_SENSOR_MUX, 15);
 
 // Create state machine instances for each sensor
 SensorStateMachine<TemperatureSensor> tempStateMachine(tempSensorInstance, TEMP_SENSOR_POWER_PIN);
@@ -59,24 +59,24 @@ void setup() {
     // Set GPIO pins as INPUTs for reading sensor data
     pinMode(ONE_WIRE_BUS, INPUT);
 
-    EEPROM.begin(32);          // Initialize EEPROM with a size of 32 bytes
     Wire.begin();              // Initialize I2C bus as master
 
     // Initialize sensors
     tempSensorInstance.beginSensors(); // Initialize the temperature sensor library
-    pHSensorInstance.beginSensors();   // Initialize the pH sensor library
+    tdsSensorInstance.init();  // Initialize the TDS sensor library
+    pHSensorInstance.init();   // Initialize the pH sensor library
 
     // Check if the system is waking up from deep sleep
-    if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_TIMER) {
-        Serial.println("Waking up from deep sleep.");
-        codeExecuted = true; // Set flag indicating code has been executed
-    }
+    // if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_TIMER) {
+    //     Serial.println("Waking up from deep sleep.");
+    //     codeExecuted = true; // Set flag indicating code has been executed
+    // }
 
     // If the code has not been executed yet, enter deep sleep initially
-    if (!codeExecuted) {
-        Serial.println("Going to deep sleep for the first time.");
+    // if (!codeExecuted) {
+    //     Serial.println("Going to deep sleep for the first time.");
         // goToDeepSleep(); // Enter deep sleep mode
-    }
+    // }
 
     // Note: TDS sensor does not require any additional initialization
     // Additional custom initialization can be added here if needed
@@ -119,7 +119,7 @@ void loop() {
 
     // After all sensors have completed, transmit data and go to deep sleep
     if (tempStateMachine.isOff() && tdsStateMachine.isOff() && pHStateMachine.isOff()) {
-        Serial.println("All sensors have completed. This is where I sleep.");
+    //     Serial.println("All sensors have completed. This is where I sleep.");
         goToDeepSleep();             // Enter deep sleep mode
     }
 }

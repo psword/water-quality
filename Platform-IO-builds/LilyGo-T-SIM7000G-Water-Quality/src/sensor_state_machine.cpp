@@ -87,6 +87,16 @@ void SensorStateMachine<SensorType>::read()
 
 // TemperatureSensor specialization
 template <>
+void SensorStateMachine<TemperatureSensor>::read()
+{
+    adjustedTemp = sensor_.read(0); // Read the temperature and store in adjustedTemp
+    Serial.print("Updated Temperature: ");
+    Serial.println(adjustedTemp);
+}
+
+
+// TemperatureSensor specialization
+template <>
 void SensorStateMachine<TemperatureSensor>::shutdown()
 {
     digitalWrite(powerPin_, LOW); // Power off the sensor

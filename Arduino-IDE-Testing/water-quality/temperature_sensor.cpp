@@ -40,9 +40,16 @@ void TemperatureSensor::beginSensors() {
 void TemperatureSensor::analogReadAction() {
     sensors.requestTemperatures();
     float sensorValue = sensors.getTempCByIndex(0);
-    analogBuffer[analogBufferIndex] = sensorValue;
-    analogBufferIndex = (analogBufferIndex + 1) % tempSenseIterations;
+    
+    // Check for error value (-127.00°C) and keep last valid reading
+    if (sensorValue != -127.00) {
+        analogBuffer[analogBufferIndex] = sensorValue;
+        analogBufferIndex = (analogBufferIndex + 1) % tempSenseIterations;
+    } else {
+        Serial.println("Warning: Temperature sensor returned -127.00°C (invalid reading).");
+    }
 }
+
 
 /**
  * Computes the median temperature from the buffer.

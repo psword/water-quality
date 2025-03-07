@@ -2,14 +2,14 @@
 #include <Arduino.h>
 #include <algorithm> // Include for std::copy and std::sort
 
-// Define the global ADS1115 object (must be declared `extern` in the header)
+// Define the ADS1115 object
 ADS1115_WE adcTDS(I2C_ADDRESS_TDS);
 
 /**
  * Constructor for TdsSensor.
  */
-TdsSensor::TdsSensor(float voltageConstant, float kCoeff, float refTemp, float maxADC, ADS1115_MUX inputMux, int iterations)
-    : VC(voltageConstant), kCoefficient(kCoeff), referenceTemp(refTemp), maxADCValue(maxADC), sensorInputMux(inputMux), tdsSenseIterations(iterations), analogBufferIndex(0)
+TdsSensor::TdsSensor(float kCoeff, float refTemp, ADS1115_MUX inputMux, int iterations)
+    : kCoefficient(kCoeff), referenceTemp(refTemp), sensorInputMux(inputMux), tdsSenseIterations(iterations), analogBufferIndex(0)
 {
     // Allocate memory for the analog buffer
     analogBuffer = new float[tdsSenseIterations];
@@ -32,13 +32,11 @@ TdsSensor::~TdsSensor()
  */
 void TdsSensor::init()
 {
-    Wire.begin();
-    // if (!adcTDS.init())
-    // {
-    //   Serial.println("ADS1115 No 1 (Tds Sensor) not connected!");
-    // }
+    if (!adcTDS.init())
+    {
+      Serial.println("ADS1115 No 1 (Tds Sensor) not connected!");
+    }
     adcTDS.setVoltageRange_mV(ADS1115_RANGE_6144);
-    // adcTDS.setMeasureMode(ADS1115_SINGLE);
     adcTDS.setMeasureMode(ADS1115_CONTINUOUS);
     adcTDS.setCompareChannels(sensorInputMux);
 }
@@ -48,9 +46,10 @@ void TdsSensor::init()
  */
 void TdsSensor::analogReadAction()
 {
-    adcTDS.setCompareChannels(sensorInputMux); // Ensure correct channel is selected; uncomment if needed
-    float sensorValue = adcTDS.getRawResult();
-    Serial.println(sensorValue);
+    float voltage = adcTDS.getResult_V(); // 10000 Ohm Resistor Cuts Voltage in half
+    float probeVoltage = voltage*2;
+    float sensorValue = probeVoltage; // Result in V
+    // Serial.println(sensorValue);
     analogBuffer[analogBufferIndex] = sensorValue;
     analogBufferIndex = (analogBufferIndex + 1) % tdsSenseIterations; // Circular buffer
 }
@@ -81,8 +80,9 @@ float TdsSensor::adjustTds(float voltage, float temperature)
 {
     float tempCorrection = 1.0 + kCoefficient * (temperature - referenceTemp);
     float compensationVoltage = voltage / tempCorrection;
-
-    return (133.42 / compensationVoltage * compensationVoltage * compensationVoltage - 255.86 * compensationVoltage * compensationVoltage + 857.39 * compensationVoltage) * 0.5;
+    float rawTds = (133.42 * voltage * voltage * voltage - 255.86 * voltage * voltage + 857.39 * voltage) * 0.5;
+    float correctedTds = 1.1297 * rawTds - 9.52; // apply calibration scaler
+    return correctedTds;
 }
 
 /**
@@ -92,7 +92,7 @@ float TdsSensor::read(float temperature)
 {
     analogReadAction();
     float medianSensorValue = computeMedian();
-    float voltage = (medianSensorValue / maxADCValue) * VC;
+    float voltage = medianSensorValue;
     return adjustTds(voltage, temperature);
 }
 

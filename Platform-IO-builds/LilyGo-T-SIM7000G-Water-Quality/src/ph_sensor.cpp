@@ -1,28 +1,37 @@
 // ph_sensor.cpp
 
 #include "ph_sensor.h"
+#include "debug.h"
 #include <algorithm>        // Include for std::copy and std::sort
 #include <Arduino.h>
 
 // Define the ADS1115 object
 ADS1115_WE adcPH(I2C_ADDRESS_PH);
 
-float acidVoltage    = 1.02513;    //buffer solution 4.0 at 25C
-float neutralVoltage = .75525;     //buffer solution 7.0 at 25C
-float baseVoltage    = .50250;     //buffer solution 10.0 at 25C
-float probeVoltage;         //voltage from probe
+
 
 pHSensor::pHSensor(ADS1115_MUX inputMux, int iterations)
     : sensorInputMux(inputMux), pHSenseIterations(iterations), analogBufferIndex(0),
     acidVoltage(1.02513), neutralVoltage(.75525), baseVoltage(.50250), probeVoltage(0.0)
 {
-    // Allocate memory for the analog buffer
+    DEBUG_PRINTLN("pHSensor constructor called");
+    DEBUG_PRINT("Input MUX: "); DEBUG_PRINTLN(sensorInputMux);
+    DEBUG_PRINT("Iterations: "); DEBUG_PRINTLN(pHSenseIterations);
+    DEBUG_PRINT("Acid Voltage: "); DEBUG_PRINTLN(acidVoltage);
+    DEBUG_PRINT("Neutral Voltage: "); DEBUG_PRINTLN(neutralVoltage);
+    DEBUG_PRINT("Base Voltage: "); DEBUG_PRINTLN(baseVoltage);
+
     analogBuffer = new float[pHSenseIterations];
     if (analogBuffer == nullptr)
     {
-        Serial.println("Failed to allocate memory for analog buffer");
+        DEBUG_PRINTLN("Failed to allocate memory for analog buffer");
+    }
+    else
+    {
+        DEBUG_PRINTLN("Memory allocated for analog buffer");
     }
 }
+
 
 pHSensor::~pHSensor()
 {
@@ -40,107 +49,124 @@ float pHSensor::getAverageVoltage() const
  */
 void pHSensor::init()
 {
+    DEBUG_PRINTLN("Initializing pH sensor...");
     if (!adcPH.init())
     {
-      Serial.println("ADS1115 No 2 (pH Sensor) not connected!");
+        DEBUG_PRINTLN("ERROR: ADS1115 No 2 (pH Sensor) not connected!");
+    }
+    else
+    {
+        DEBUG_PRINTLN("ADS1115 initialized successfully.");
     }
     adcPH.setVoltageRange_mV(ADS1115_RANGE_6144);
     adcPH.setMeasureMode(ADS1115_CONTINUOUS);
     adcPH.setCompareChannels(sensorInputMux);
+    DEBUG_PRINTLN("pH sensor setup complete.");
 }
+
 
 void pHSensor::analogReadAction()
 {
-    float voltage = adcPH.getResult_V(); // 10000 Ohm Resistor Cuts Voltage in half
-    probeVoltage = voltage*2; // multiply by 2 to get the correct value
-    float sensorValue = probeVoltage;
-    Serial.println(sensorValue);
-    // Store the voltage value in the circular buffer
-    analogBuffer[analogBufferIndex] = sensorValue;
+    float voltage = adcPH.getResult_V();
+    probeVoltage = voltage * 2;
+    
+    DEBUG_PRINT("Raw ADC Voltage: "); DEBUG_PRINTLN(voltage);
+    DEBUG_PRINT("Probe Voltage (adjusted): "); DEBUG_PRINTLN(probeVoltage);
 
-    // Update the buffer index
+    analogBuffer[analogBufferIndex] = probeVoltage;
     analogBufferIndex = (analogBufferIndex + 1) % pHSenseIterations;
 }
 
+
 float pHSensor::computeMedian()
 {
-    float sortedBuffer[pHSenseIterations]; // Temporary array for sorting
+    float sortedBuffer[pHSenseIterations]; 
     std::copy(analogBuffer, analogBuffer + pHSenseIterations, sortedBuffer);
     std::sort(sortedBuffer, sortedBuffer + pHSenseIterations);
 
+    DEBUG_PRINTLN("Sorted analog buffer:");
+    for (int i = 0; i < pHSenseIterations; i++)
+    {
+        DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
+    }
+    DEBUG_PRINTLN("");
+
+    float medianValue;
     if (pHSenseIterations % 2 == 0)
     {
-        float median = (sortedBuffer[pHSenseIterations / 2 - 1] + sortedBuffer[pHSenseIterations / 2]) / 2.0f;
-        return median;
+        medianValue = (sortedBuffer[pHSenseIterations / 2 - 1] + sortedBuffer[pHSenseIterations / 2]) / 2.0f;
     }
     else
     {
-        return sortedBuffer[pHSenseIterations / 2];
+        medianValue = sortedBuffer[pHSenseIterations / 2];
     }
+
+    DEBUG_PRINT("Computed Median: "); DEBUG_PRINTLN(medianValue);
+    return medianValue;
 }
+
 
 float pHSensor::adjustpH(float voltage, float temperature)
 {
-    Serial.print("Probe Voltage: ");
-    Serial.println(probeVoltage, 10);
-    Serial.print("Temperature: ");
-    Serial.println(temperature);
+    DEBUG_PRINT("Adjusting pH with voltage: "); DEBUG_PRINT(voltage);
+    DEBUG_PRINT(" and temperature: "); DEBUG_PRINTLN(temperature);
 
-    // Check for potential division by zero
     if (neutralVoltage * 2 == acidVoltage * 2) {
-        Serial.println("Error: Division by zero in slope calculation (neutral - acid).");
+        DEBUG_PRINTLN("ERROR: Division by zero in slope calculation (neutral - acid).");
         return NAN;
     }
     if (neutralVoltage * 2 == baseVoltage * 2) {
-        Serial.println("Error: Division by zero in slope calculation (neutral - base).");
+        DEBUG_PRINTLN("ERROR: Division by zero in slope calculation (neutral - base).");
         return NAN;
     }
 
-    double slope = ((7.0 - 4.01) / (neutralVoltage * 2 - acidVoltage * 2) + (7 - 10.0) / (neutralVoltage * 2 - baseVoltage * 2)) / 2;
+    double slope = ((7.0 - 4.01) / (neutralVoltage * 2 - acidVoltage * 2) +
+                    (7 - 10.0) / (neutralVoltage * 2 - baseVoltage * 2)) / 2;
 
-    Serial.print("Slope: ");
-    Serial.println(slope, 10);
+    DEBUG_PRINT("Slope: "); DEBUG_PRINTLN(slope, 10);
 
     if (std::isnan(slope)) {
-        Serial.println("Error: Slope is NaN!");
+        DEBUG_PRINTLN("ERROR: Slope is NaN!");
         return NAN;
     }
 
     double intercept = 7.0 - slope * (neutralVoltage * 2);
-    Serial.print("Intercept: ");
-    Serial.println(intercept, 10);
+    DEBUG_PRINT("Intercept: "); DEBUG_PRINTLN(intercept, 10);
 
     if (std::isnan(intercept)) {
-        Serial.println("Error: Intercept is NaN!");
+        DEBUG_PRINTLN("ERROR: Intercept is NaN!");
         return NAN;
     }
 
     double compensatedSlope = slope * ((temperature + 273.15) / (25.0 + 273.15));
-    Serial.print("Compensated Slope: ");
-    Serial.println(compensatedSlope, 10);
+    DEBUG_PRINT("Compensated Slope: "); DEBUG_PRINTLN(compensatedSlope, 10);
 
     if (std::isnan(compensatedSlope)) {
-        Serial.println("Error: Compensated slope is NaN!");
+        DEBUG_PRINTLN("ERROR: Compensated slope is NaN!");
         return NAN;
     }
 
     double numerator = compensatedSlope * (probeVoltage);
     double pHValue = numerator + intercept;
 
-    Serial.print("Calculated pH: ");
-    Serial.println(pHValue, 10);
-
+    DEBUG_PRINT("Final Calculated pH: "); DEBUG_PRINTLN(pHValue);
     return pHValue;
 }
 
 
 float pHSensor::read(float temperature)
 {
+    DEBUG_PRINTLN("Starting pH reading...");
     analogReadAction();
+    
     float medianSensorValue = computeMedian();
     averageVoltage = medianSensorValue;
-    return adjustpH(averageVoltage, temperature);
+    float pHValue = adjustpH(averageVoltage, temperature);
+
+    DEBUG_PRINT("Final pH Value: "); DEBUG_PRINTLN(pHValue);
+    return pHValue;
 }
+
 
 void pHSensor::shutdown()
 {

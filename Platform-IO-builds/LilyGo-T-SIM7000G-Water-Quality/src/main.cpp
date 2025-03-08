@@ -62,7 +62,7 @@ void setup() {
     Wire.begin();              // Initialize I2C bus as master
 
     // Initialize sensors
-    tempSensorInstance.beginSensors(); // Initialize the temperature sensor library
+    tempSensorInstance.init(); // Initialize the temperature sensor library
     tdsSensorInstance.init();  // Initialize the TDS sensor library
     pHSensorInstance.init();   // Initialize the pH sensor library
 

@@ -21,10 +21,10 @@ private:
     int analogBufferIndex;         // Index for circular buffer
     float averageVoltage;          // Store the average voltage
 
-    float acidVoltage;    // Buffer solution 4.0 at 25C
-    float neutralVoltage; // Buffer solution 7.0 at 25C
-    float baseVoltage;    // Buffer solution 10.0 at 25C
-    float probeVoltage;   // Voltage from probe
+    float acidVoltage    = 1.02513;    //buffer solution 4.01 at 25C
+    float neutralVoltage = .75525;     //buffer solution 7.0 at 25C
+    float baseVoltage    = .50250;     //buffer solution 10.0 at 25C
+    float probeVoltage;                //voltage from probe
 
 
 public:

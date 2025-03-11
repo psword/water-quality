@@ -19,6 +19,7 @@
 #include "sensor_state_machine.h" // State machine to control each sensor
 #include "transmit_functions.h"  // I2C transmission functions
 #include "debug.h"              // Debugging functions
+#include "uRTCLib.h"            // Micro Real-Time Clock Library
 
 // Global flags and constants
 bool codeExecuted = false;          // Flag to track if code has executed previously
@@ -30,16 +31,27 @@ unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR
 TemperatureSensor tempSensorInstance(ONE_WIRE_BUS);
 
 // TDS Sensor: Specify kCoefficient, reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
-TdsSensor tdsSensorInstance(0.02, 25.0, TDS_SENSOR_MUX, 15);
+TdsSensor tdsSensorInstance(0.02, 25.0, TDS_SENSOR_MUX, 10);
 
 // pH Sensor: reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
-pHSensor pHSensorInstance(PH_SENSOR_MUX, 15);
+pHSensor pHSensorInstance(PH_SENSOR_MUX, 10);
 
 // Create state machine instances for each sensor
 SensorStateMachine<TemperatureSensor> tempStateMachine(tempSensorInstance, TEMP_SENSOR_POWER_PIN);
 SensorStateMachine<TdsSensor> tdsStateMachine(tdsSensorInstance, TDS_SENSOR_POWER_PIN);
 SensorStateMachine<pHSensor> pHStateMachine(pHSensorInstance, PH_SENSOR_POWER_PIN);
 
+// Instantiate uRTCLib object
+
+// RTC object: Specify I2C address,  // Comment out below line once you set the date & time - place in setup().
+// Following line sets the RTC with an explicit date & time
+// to set January 13 2022 at 12:56 you would call:
+// example -> rtc.set(second, minute, hour, dayOfWeek, dayOfMonth, month, year)
+// OR rtc.set(0, 56, 12, 5, 13, 1, 22);
+// set day of week (1=Sunday, 7=Saturday)
+uRTCLib rtc(0x68);
+
+// Setup function
 void setup() {
     Serial.begin(9600);
     while (!Serial) {;}
@@ -60,6 +72,9 @@ void setup() {
     tempSensorInstance.init();
     tdsSensorInstance.init();
     pHSensorInstance.init();
+
+    // Set the RTC time
+    rtc.set(0, 56, 12, 5, 13, 1, 22);
 
     if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_TIMER) {
         DEBUG_PRINTLN("Waking up from deep sleep.");

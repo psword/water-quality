@@ -1,7 +1,10 @@
+// tds_sensor.cpp
+
 #include "tds_sensor.h"
 #include "debug.h"
 #include <Arduino.h>
 #include <algorithm> // Include for std::copy and std::sort
+#include <cmath>     // For isnan() and isinf()
 
 // Define the ADS1115 object
 ADS1115_WE adcTDS(I2C_ADDRESS_TDS);
@@ -26,6 +29,9 @@ TdsSensor::TdsSensor(float kCoeff, float refTemp, ADS1115_MUX inputMux, int iter
     else
     {
         DEBUG_PRINTLN("Memory allocated for analog buffer");
+        for (int i = 0; i < tdsSenseIterations; i++) {
+            analogBuffer[i] = 0.0;
+        }
     }
 }
 
@@ -64,15 +70,18 @@ void TdsSensor::analogReadAction()
 {
     float voltage = adcTDS.getResult_V();
     float probeVoltage = voltage * 2;
-    float sensorValue = probeVoltage;
+    
+    // Check for NaN or infinite values before storing
+    if (!isnan(probeVoltage) && !isinf(probeVoltage)) {
+        analogBuffer[analogBufferIndex] = probeVoltage;
+        analogBufferIndex = (analogBufferIndex + 1) % tdsSenseIterations; // Circular buffer
 
-    DEBUG_PRINT("Raw ADC Voltage: "); DEBUG_PRINTLN(voltage);
-    DEBUG_PRINT("Probe Voltage (adjusted): "); DEBUG_PRINTLN(probeVoltage);
-
-    analogBuffer[analogBufferIndex] = sensorValue;
-    analogBufferIndex = (analogBufferIndex + 1) % tdsSenseIterations; // Circular buffer
+        DEBUG_PRINT("Raw ADC Voltage: "); DEBUG_PRINTLN(voltage);
+        DEBUG_PRINT("Probe Voltage (adjusted): "); DEBUG_PRINTLN(probeVoltage);
+    } else {
+        DEBUG_PRINTLN("WARNING: Invalid ADC reading, skipping storage.");
+    }
 }
-
 
 /**
  * Computes the median reading from the buffer.
@@ -86,7 +95,12 @@ float TdsSensor::computeMedian()
     DEBUG_PRINTLN("Sorted analog buffer:");
     for (int i = 0; i < tdsSenseIterations; i++)
     {
-        DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
+        if (isnan(sortedBuffer[i]) || isinf(sortedBuffer[i])) {
+            DEBUG_PRINT("ERROR: Invalid value detected in buffer: "); 
+            DEBUG_PRINTLN(sortedBuffer[i]);
+        } else {
+            DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
+        }
     }
     DEBUG_PRINTLN("");
 
@@ -104,7 +118,6 @@ float TdsSensor::computeMedian()
     return medianValue;
 }
 
-
 /**
  * Adjusts the TDS reading based on temperature.
  */
@@ -112,6 +125,11 @@ float TdsSensor::adjustTds(float voltage, float temperature)
 {
     DEBUG_PRINT("Adjusting TDS with voltage: "); DEBUG_PRINT(voltage);
     DEBUG_PRINT(" and temperature: "); DEBUG_PRINTLN(temperature);
+
+    if (isnan(voltage) || isinf(voltage)) {
+        DEBUG_PRINTLN("ERROR: Voltage is NaN or infinite!");
+        return NAN;
+    }
 
     float tempCorrection = 1.0 + kCoefficient * (temperature - referenceTemp);
     float compensationVoltage = voltage / tempCorrection;
@@ -125,7 +143,6 @@ float TdsSensor::adjustTds(float voltage, float temperature)
 
     return correctedTds;
 }
-
 
 /**
  * Reads and adjusts the TDS value.
@@ -142,7 +159,6 @@ float TdsSensor::read(float temperature)
     DEBUG_PRINT("Final TDS Value: "); DEBUG_PRINTLN(tdsValue);
     return tdsValue;
 }
-
 
 /**
  * Shuts down the sensor.

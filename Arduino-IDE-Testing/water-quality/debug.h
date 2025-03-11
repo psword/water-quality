@@ -8,7 +8,7 @@
   #define DEBUG_PRINTLN(...) Serial.println(__VA_ARGS__)
 #else
   #define DEBUG_PRINT(...)  // Empty
-  #define DEBUG_PRINTLN(...)  // Empty
+  #define DEBUG_PRINTLN(...)  // Empty 
 #endif
 
 #endif // DEBUG_H

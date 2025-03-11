@@ -4,11 +4,10 @@
 #include "debug.h"
 #include <algorithm>        // Include for std::copy and std::sort
 #include <Arduino.h>
+#include <cmath>            // For isnan() and isinf()
 
 // Define the ADS1115 object
 ADS1115_WE adcPH(I2C_ADDRESS_PH);
-
-
 
 pHSensor::pHSensor(ADS1115_MUX inputMux, int iterations)
     : sensorInputMux(inputMux), pHSenseIterations(iterations), analogBufferIndex(0),
@@ -21,41 +20,34 @@ pHSensor::pHSensor(ADS1115_MUX inputMux, int iterations)
     DEBUG_PRINT("Neutral Voltage: "); DEBUG_PRINTLN(neutralVoltage);
     DEBUG_PRINT("Base Voltage: "); DEBUG_PRINTLN(baseVoltage);
 
+    // Allocate memory for analog buffer
     analogBuffer = new float[pHSenseIterations];
-    if (analogBuffer == nullptr)
-    {
-        DEBUG_PRINTLN("Failed to allocate memory for analog buffer");
-    }
-    else
-    {
+    if (analogBuffer == nullptr) {
+        DEBUG_PRINTLN("ERROR: Failed to allocate memory for analog buffer");
+    } else {
         DEBUG_PRINTLN("Memory allocated for analog buffer");
+
+        // Initialize buffer with 0.0 to prevent uninitialized values
+        for (int i = 0; i < pHSenseIterations; i++) {
+            analogBuffer[i] = 0.0;
+        }
     }
 }
 
-
-pHSensor::~pHSensor()
-{
+pHSensor::~pHSensor() {
     // Deallocate memory for the analog buffer
     delete[] analogBuffer;
 }
 
-float pHSensor::getAverageVoltage() const
-{
+float pHSensor::getAverageVoltage() const {
     return averageVoltage;
 }
 
-/**
- * Initializes the PH sensor (sets up ADS1115).
- */
-void pHSensor::init()
-{
+void pHSensor::init() {
     DEBUG_PRINTLN("Initializing pH sensor...");
-    if (!adcPH.init())
-    {
+    if (!adcPH.init()) {
         DEBUG_PRINTLN("ERROR: ADS1115 No 2 (pH Sensor) not connected!");
-    }
-    else
-    {
+    } else {
         DEBUG_PRINTLN("ADS1115 initialized successfully.");
     }
     adcPH.setVoltageRange_mV(ADS1115_RANGE_6144);
@@ -64,40 +56,42 @@ void pHSensor::init()
     DEBUG_PRINTLN("pH sensor setup complete.");
 }
 
-
-void pHSensor::analogReadAction()
-{
+void pHSensor::analogReadAction() {
     float voltage = adcPH.getResult_V();
     probeVoltage = voltage * 2;
-    
-    DEBUG_PRINT("Raw ADC Voltage: "); DEBUG_PRINTLN(voltage);
-    DEBUG_PRINT("Probe Voltage (adjusted): "); DEBUG_PRINTLN(probeVoltage);
 
-    analogBuffer[analogBufferIndex] = probeVoltage;
-    analogBufferIndex = (analogBufferIndex + 1) % pHSenseIterations;
+    // Check for NaN or infinite values before storing
+    if (!isnan(probeVoltage) && !isinf(probeVoltage)) {
+        analogBuffer[analogBufferIndex] = probeVoltage;
+        analogBufferIndex = (analogBufferIndex + 1) % pHSenseIterations;
+
+        DEBUG_PRINT("Raw ADC Voltage: "); DEBUG_PRINTLN(voltage);
+        DEBUG_PRINT("Probe Voltage (adjusted): "); DEBUG_PRINTLN(probeVoltage);
+    } else {
+        DEBUG_PRINTLN("WARNING: Invalid ADC reading, skipping storage.");
+    }
 }
 
-
-float pHSensor::computeMedian()
-{
+float pHSensor::computeMedian() {
     float sortedBuffer[pHSenseIterations]; 
     std::copy(analogBuffer, analogBuffer + pHSenseIterations, sortedBuffer);
     std::sort(sortedBuffer, sortedBuffer + pHSenseIterations);
 
     DEBUG_PRINTLN("Sorted analog buffer:");
-    for (int i = 0; i < pHSenseIterations; i++)
-    {
-        DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
+    for (int i = 0; i < pHSenseIterations; i++) {
+        if (isnan(sortedBuffer[i]) || isinf(sortedBuffer[i])) {
+            DEBUG_PRINT("ERROR: Invalid value detected in buffer: "); 
+            DEBUG_PRINTLN(sortedBuffer[i]);
+        } else {
+            DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
+        }
     }
     DEBUG_PRINTLN("");
 
     float medianValue;
-    if (pHSenseIterations % 2 == 0)
-    {
+    if (pHSenseIterations % 2 == 0) {
         medianValue = (sortedBuffer[pHSenseIterations / 2 - 1] + sortedBuffer[pHSenseIterations / 2]) / 2.0f;
-    }
-    else
-    {
+    } else {
         medianValue = sortedBuffer[pHSenseIterations / 2];
     }
 
@@ -105,11 +99,14 @@ float pHSensor::computeMedian()
     return medianValue;
 }
 
-
-float pHSensor::adjustpH(float voltage, float temperature)
-{
+float pHSensor::adjustpH(float voltage, float temperature) {
     DEBUG_PRINT("Adjusting pH with voltage: "); DEBUG_PRINT(voltage);
     DEBUG_PRINT(" and temperature: "); DEBUG_PRINTLN(temperature);
+
+    if (isnan(voltage) || isinf(voltage)) {
+        DEBUG_PRINTLN("ERROR: Voltage is NaN or infinite!");
+        return NAN;
+    }
 
     if (neutralVoltage * 2 == acidVoltage * 2) {
         DEBUG_PRINTLN("ERROR: Division by zero in slope calculation (neutral - acid).");
@@ -123,43 +120,46 @@ float pHSensor::adjustpH(float voltage, float temperature)
     double slope = ((7.0 - 4.01) / (neutralVoltage * 2 - acidVoltage * 2) +
                     (7 - 10.0) / (neutralVoltage * 2 - baseVoltage * 2)) / 2;
 
-    DEBUG_PRINT("Slope: "); DEBUG_PRINTLN(slope, 10);
-
-    if (std::isnan(slope)) {
-        DEBUG_PRINTLN("ERROR: Slope is NaN!");
+    if (isnan(slope) || isinf(slope)) {
+        DEBUG_PRINTLN("ERROR: Slope is NaN or infinite!");
         return NAN;
     }
 
     double intercept = 7.0 - slope * (neutralVoltage * 2);
-    DEBUG_PRINT("Intercept: "); DEBUG_PRINTLN(intercept, 10);
 
-    if (std::isnan(intercept)) {
-        DEBUG_PRINTLN("ERROR: Intercept is NaN!");
+    if (isnan(intercept) || isinf(intercept)) {
+        DEBUG_PRINTLN("ERROR: Intercept is NaN or infinite!");
         return NAN;
     }
 
     double compensatedSlope = slope * ((temperature + 273.15) / (25.0 + 273.15));
-    DEBUG_PRINT("Compensated Slope: "); DEBUG_PRINTLN(compensatedSlope, 10);
 
-    if (std::isnan(compensatedSlope)) {
-        DEBUG_PRINTLN("ERROR: Compensated slope is NaN!");
+    if (isnan(compensatedSlope) || isinf(compensatedSlope)) {
+        DEBUG_PRINTLN("ERROR: Compensated slope is NaN or infinite!");
         return NAN;
     }
 
-    double numerator = compensatedSlope * (probeVoltage);
-    double pHValue = numerator + intercept;
+    double pHValue = compensatedSlope * voltage + intercept;
+
+    if (isnan(pHValue) || isinf(pHValue)) {
+        DEBUG_PRINTLN("ERROR: Computed pH is NaN or infinite!");
+        return NAN;
+    }
 
     DEBUG_PRINT("Final Calculated pH: "); DEBUG_PRINTLN(pHValue);
     return pHValue;
 }
 
-
-float pHSensor::read(float temperature)
-{
+float pHSensor::read(float temperature) {
     DEBUG_PRINTLN("Starting pH reading...");
     analogReadAction();
     
     float medianSensorValue = computeMedian();
+    if (isnan(medianSensorValue) || isinf(medianSensorValue)) {
+        DEBUG_PRINTLN("ERROR: Median voltage is invalid, returning NaN.");
+        return NAN;
+    }
+
     averageVoltage = medianSensorValue;
     float pHValue = adjustpH(averageVoltage, temperature);
 
@@ -167,13 +167,10 @@ float pHSensor::read(float temperature)
     return pHValue;
 }
 
-
-void pHSensor::shutdown()
-{
+void pHSensor::shutdown() {
     // No operation
 }
 
-void pHSensor::stabilize()
-{
+void pHSensor::stabilize() {
     // Possible for future operation
 }

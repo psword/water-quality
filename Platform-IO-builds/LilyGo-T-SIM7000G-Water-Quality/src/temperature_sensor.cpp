@@ -1,21 +1,25 @@
 // temperature_sensor.cpp
 
 #include "temperature_sensor.h"
+#include "debug.h"
 #include <Arduino.h>
+#include <cmath> // For isnan() and isinf()
 
 /**
  * Constructor for TemperatureSensor, initializes the OneWire bus and DallasTemperature sensor.
- * @param oneWirePin The pin connected to the OneWire bus.
- * @param iterations The number of measurements to take (default is 10).
  */
 TemperatureSensor::TemperatureSensor(int oneWirePin, int iterations) 
     : oneWire(oneWirePin), sensors(&oneWire), tempSenseIterations(iterations), analogBufferIndex(0) 
 {
-    // Allocate memory for the analog buffer
     analogBuffer = new float[tempSenseIterations];
-    if (analogBuffer == nullptr) 
-    {
-        Serial.println("Failed to allocate memory for analog buffer");
+    
+    if (analogBuffer == nullptr) {
+        DEBUG_PRINTLN("ERROR: Failed to allocate memory for analog buffer");
+    } else {
+        DEBUG_PRINTLN("Memory allocated for analog buffer");
+        for (int i = 0; i < tempSenseIterations; i++) {
+            analogBuffer[i] = 0.0; // Initialize to a safe default
+        }
     }
 }
 
@@ -30,8 +34,10 @@ TemperatureSensor::~TemperatureSensor() {
 /**
  * Initializes the DallasTemperature sensor.
  */
-void TemperatureSensor::beginSensors() {
-    sensors.begin();
+void TemperatureSensor::init() {
+    DEBUG_PRINTLN("Initializing temperature sensor...");
+    sensors.begin(); 
+    DEBUG_PRINTLN("Temperature sensor setup complete.");
 }
 
 /**
@@ -41,15 +47,20 @@ void TemperatureSensor::analogReadAction() {
     sensors.requestTemperatures();
     float sensorValue = sensors.getTempCByIndex(0);
     
-    // Check for error value (-127.00°C) and keep last valid reading
-    if (sensorValue != -127.00) {
+    DEBUG_PRINT("Raw Temperature: "); DEBUG_PRINTLN(sensorValue);
+
+    if (sensorValue != -127.00 && !isnan(sensorValue) && !isinf(sensorValue)) {
         analogBuffer[analogBufferIndex] = sensorValue;
+        DEBUG_PRINT("Stored Temperature at Index "); 
+        DEBUG_PRINT(analogBufferIndex); 
+        DEBUG_PRINT(": "); 
+        DEBUG_PRINTLN(sensorValue);
+
         analogBufferIndex = (analogBufferIndex + 1) % tempSenseIterations;
     } else {
-        Serial.println("Warning: Temperature sensor returned -127.00°C (invalid reading).");
+        DEBUG_PRINTLN("WARNING: Invalid temperature reading, keeping last valid value.");
     }
 }
-
 
 /**
  * Computes the median temperature from the buffer.
@@ -57,15 +68,35 @@ void TemperatureSensor::analogReadAction() {
  */
 float TemperatureSensor::computeMedian() {
     float sortedBuffer[tempSenseIterations]; // Temporary array for sorting
+    DEBUG_PRINTLN("Sorted temperature buffer:");
+    for (int i = 0; i < tempSenseIterations; i++) {
+    if (isnan(sortedBuffer[i]) || isinf(sortedBuffer[i])) {
+        DEBUG_PRINT("ERROR: Invalid value detected in buffer: "); 
+        DEBUG_PRINTLN(sortedBuffer[i]);
+    } else {
+        DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
+        }
+    }
+    DEBUG_PRINTLN("");
+    
     std::copy(analogBuffer, analogBuffer + tempSenseIterations, sortedBuffer);
     std::sort(sortedBuffer, sortedBuffer + tempSenseIterations);
 
-    if (tempSenseIterations % 2 == 0) {
-        float median = (sortedBuffer[tempSenseIterations / 2 - 1] + sortedBuffer[tempSenseIterations / 2]) / 2.0f;
-        return median;
-    } else {
-        return sortedBuffer[tempSenseIterations / 2];
+    DEBUG_PRINTLN("Sorted temperature buffer:");
+    for (int i = 0; i < tempSenseIterations; i++) {
+        DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
     }
+    DEBUG_PRINTLN("");
+
+    float medianValue;
+    if (tempSenseIterations % 2 == 0) {
+        medianValue = (sortedBuffer[tempSenseIterations / 2 - 1] + sortedBuffer[tempSenseIterations / 2]) / 2.0f;
+    } else {
+        medianValue = sortedBuffer[tempSenseIterations / 2];
+    }
+
+    DEBUG_PRINT("Computed Median Temperature: "); DEBUG_PRINTLN(medianValue);
+    return medianValue;
 }
 
 /**
@@ -73,15 +104,15 @@ float TemperatureSensor::computeMedian() {
  * @return The adjusted temperature.
  */
 float TemperatureSensor::read(float temperature) {
+    DEBUG_PRINTLN("Starting temperature reading...");
     analogReadAction();
-    return computeMedian();
-}
+    
+    float medianTemperature = computeMedian();
+    
+    DEBUG_PRINT("Final Adjusted Temperature: "); 
+    DEBUG_PRINTLN(medianTemperature);
 
-/**
- * Initializes the sensor, calls beginSensors().
- */
-void TemperatureSensor::init() {
-    beginSensors(); // Initialize the sensors object
+    return medianTemperature;
 }
 
 /**

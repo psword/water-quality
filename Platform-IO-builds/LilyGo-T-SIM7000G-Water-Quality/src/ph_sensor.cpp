@@ -2,6 +2,7 @@
 
 #include "ph_sensor.h"
 #include "debug.h"
+#include "sensor_config.h"
 #include <algorithm>        // Include for std::copy and std::sort
 #include <Arduino.h>
 #include <cmath>            // For isnan() and isinf()
@@ -162,6 +163,7 @@ float pHSensor::read(float temperature) {
 
     averageVoltage = medianSensorValue;
     float pHValue = adjustpH(averageVoltage, temperature);
+    float finalpH = pHValue;
 
     DEBUG_PRINT("Final pH Value: "); DEBUG_PRINTLN(pHValue);
     return pHValue;

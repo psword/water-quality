@@ -2,6 +2,7 @@
 
 #include "tds_sensor.h"
 #include "debug.h"
+#include "sensor_config.h"
 #include <Arduino.h>
 #include <algorithm> // Include for std::copy and std::sort
 #include <cmath>     // For isnan() and isinf()
@@ -155,6 +156,7 @@ float TdsSensor::read(float temperature)
     float medianSensorValue = computeMedian();
     float voltage = medianSensorValue;
     float tdsValue = adjustTds(voltage, temperature);
+    float finalTDS = tdsValue;
 
     DEBUG_PRINT("Final TDS Value: "); DEBUG_PRINTLN(tdsValue);
     return tdsValue;

@@ -2,6 +2,7 @@
 
 #include "temperature_sensor.h"
 #include "debug.h"
+#include "sensor_config.h"
 #include <Arduino.h>
 #include <cmath> // For isnan() and isinf()
 
@@ -108,7 +109,7 @@ float TemperatureSensor::read(float temperature) {
     analogReadAction();
     
     float medianTemperature = computeMedian();
-    
+    float finalTemp = medianTemperature;
     DEBUG_PRINT("Final Adjusted Temperature: "); 
     DEBUG_PRINTLN(medianTemperature);
 

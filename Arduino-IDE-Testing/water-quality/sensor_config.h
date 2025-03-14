@@ -8,7 +8,11 @@
 #ifndef SENSOR_CONFIG
 #define SENSOR_CONFIG
 
-// Pin Definitions
+// Serial Configuration
+#define SerialMon Serial // Set serial for debug console (to the Serial Monitor)
+#define SerialAT Serial1 // Communicate with SIM7000G via Serial1 (AT Commands)
+
+// Sensor Pin Definitions
 
 #define ONE_WIRE_BUS 5                      // GPIO pin for the OneWire data line (DS18B20 temperature sensor)
 #define TEMP_SENSOR_POWER_PIN 18             // GPIO pin for controlling power to the temperature sensor
@@ -19,6 +23,16 @@
 
 // Global Variables
 
+// SD Card Configuration
+static const int SD_CS = 13;             // Chip Select pin for the SD card module
+static const int SD_MOSI = 15;           // SPI MOSI pin for the SD card module
+static const int SD_MISO = 2;            // SPI MISO pin for the SD card module
+static const int SD_SCLK = 14;            // SPI SCLK pin for the SD card module
+
+// Others
+extern float finalTemp;                  // Global variable to store the final temperature value (write to SD)
+extern float finalTDS;                   // Global variable to store the final TDS value (write to SD)
+extern float finalpH;                    // Global variable to store the final pH value (write to SD)
 extern float adjustedTemp;               // Global variable to store the adjusted temperature value
 extern bool codeExecuted;                // Flag to indicate whether the code has executed before
 extern const unsigned long readDelay;    // Global constant for the delay between sensor reads (milliseconds)

@@ -2,11 +2,13 @@
 
 #include "sensor_state_machine.h"
 #include "sensor_config.h"
-#include "transmit_functions.h"
 #include "debug.h"
 #include <Arduino.h>
 
 float adjustedTemp = 0;              // Variable to store temperature
+float finalTemp = 0.0;               // Final temperature value
+float finalTDS = 0.0;                // Final TDS value
+float finalpH = 0.0;                 // Final pH value
 const unsigned long readDelay = 100; // Delay between reads (milliseconds)
 
 template <typename SensorType>
@@ -116,7 +118,24 @@ template <>
 void SensorStateMachine<TemperatureSensor>::read()
 {
     adjustedTemp = sensor_.read(0);
+    finalTemp = adjustedTemp;
     DEBUG_PRINT("Updated Temperature: "); DEBUG_PRINTLN(adjustedTemp);
+}
+
+template <>
+void SensorStateMachine<TdsSensor>::read()
+{
+    float sensorValue = sensor_.read(adjustedTemp);
+    finalTDS = sensorValue;
+    DEBUG_PRINT("Sensor Read Value: "); DEBUG_PRINTLN(sensorValue);
+}
+
+template <>
+void SensorStateMachine<pHSensor>::read()
+{
+    float sensorValue = sensor_.read(adjustedTemp);
+    finalpH = sensorValue;
+    DEBUG_PRINT("Sensor Read Value: "); DEBUG_PRINTLN(sensorValue);
 }
 
 template <typename SensorType>

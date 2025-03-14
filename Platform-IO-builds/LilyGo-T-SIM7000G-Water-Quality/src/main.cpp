@@ -34,8 +34,6 @@
  #include <ArduinoJson.h>        // JSON Library for ESP32
  TinyGsm        modem(Serial1);
  TinyGsmClient  client(modem); // TinyGSM client
- uint32_t lastReconnectAttempt = 0;
- uint32_t lastSendAttempt = 0;
  
  PubSubClient  mqtt(client); // MQTT client
  
@@ -47,7 +45,7 @@
  // Global flags and constants
  bool codeExecuted = false;          // Flag to track if code has executed previously
  bool dataLogged = false;            // Flag to track if data has been logged
- uint32_t bootCounter = 0;           // Counter to track number of boots
+ RTC_DATA_ATTR u_int32_t bootCounter = 0;           // Counter to track number of boots
  unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR; // Sleep duration in microseconds
  
  // Instantiate sensor objects
@@ -131,17 +129,16 @@
  }
  
  // RTC Verify
- void rtcVerify(uRTCLib rtc) {   
+ String rtcVerify(uRTCLib rtc) {   
      char timeStamp[128]; // Buffer to store timeStamp test
      sprintf(timeStamp, "%02d/%02d/%02d %s %02d:%02d:%02d",
          rtc.year(), rtc.month(), rtc.day(),
          daysOfTheWeek[rtc.dayOfWeek() - 1],  // Adjust day index (1-7 → 0-6)
          rtc.hour(), rtc.minute(), rtc.second());
-     DEBUG_PRINTLN("========TimeStamp Print.=======");
-     DEBUG_PRINTLN(timeStamp);
-     DEBUG_PRINTLN("===========================");
+    return String(timeStamp);
  }
- 
+
+// Functions for Modem
  void modemPowerOn(){
      pinMode(PWR_PIN, OUTPUT);
      digitalWrite(PWR_PIN, LOW);
@@ -162,14 +159,29 @@
      modemPowerOn();
  }
  
+ bool verifyGPRS() {
+    if (!modem.isGprsConnected()) {
+        DEBUG_PRINTLN("GPRS disconnected! Attempting reconnection...");
+        if (!modem.gprsConnect(apn, gprsUser, gprsPass)) {
+          DEBUG_PRINTLN("GPRS connection failed");
+          return false;
+        }
+        DEBUG_PRINTLN("GPRS reconnected");
+    }
+    return true;
+}
+
+ // Functions to send data via MQTT
  void sendMQTT() {
      JsonDocument doc; // Allocate JSON document
       
      doc["Device"] = "LilyGo-T-SIM7000G";
-     doc["Timestamp"] = "LilyGo-T-SIM7000G";
+     doc["Timestamp"] = rtcVerify(rtc);
      doc["Temp"] = finalTemp;
      doc["TDS"] = finalTDS;
      doc["pH"] = finalpH;
+     doc["bootCounter"] = bootCounter;
+     doc["cycleTime"] = millis() / 1000 + 7; // Add 7 seconds to account for delays
        
      char jsonBuffer[256]; // Buffer to hold the JSON string
      serializeJson(doc,jsonBuffer); // Convert the JSON object to string
@@ -193,18 +205,7 @@
          sendMQTT();
          return mqtt.connected();
  }
-       
- bool verifyGPRS() {
-     if (!modem.isGprsConnected()) {
-         DEBUG_PRINTLN("GPRS disconnected! Attempting reconnection...");
-         if (!modem.gprsConnect(apn, gprsUser, gprsPass)) {
-           DEBUG_PRINTLN("GPRS connection failed");
-           return false;
-         }
-         DEBUG_PRINTLN("GPRS reconnected");
-     }
-     return true;
- }
+    
  
  // Setup function
  void setup() {
@@ -247,23 +248,27 @@
      pHSensorInstance.init();
  
      if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_TIMER) {
+         bootCounter++; // Increment boot counter
+         DEBUG_PRINT("Boot Counter: "); DEBUG_PRINTLN(bootCounter);
          DEBUG_PRINTLN("Waking up from deep sleep.");
          codeExecuted = true;
      }
  
      if (!codeExecuted) {
+        bootCounter++; // Increment boot counter
          DEBUG_PRINTLN("Setup Complete.");
          codeExecuted = true;
-     }
-     bootCounter++; // Increment boot counter
-     DEBUG_PRINT("Boot Counter: "); DEBUG_PRINTLN(bootCounter);
+     } 
  }
  
  void loop() {
      int counterNetworkRetries = 0;
-     const int MAX_RETRIES = 2;
+     const int MAX_RETRIES = 4;
      rtc.refresh();
-     rtcVerify(rtc);
+     DEBUG_PRINTLN("========TimeStamp Print.=======");
+     String currentTime = rtcVerify(rtc);
+     DEBUG_PRINTLN(currentTime);
+     DEBUG_PRINTLN("===========================");
  
      static bool tempStarted = false;
      static bool tdsStarted = false;
@@ -312,9 +317,10 @@
                  if (GSM_PIN && modem.getSimStatus() != 3) { modem.simUnlock(GSM_PIN); }
  
                  DEBUG_PRINT("Waiting for network...");
-                 if (!modem.waitForNetwork()) {
+                 while (!modem.waitForNetwork() && counterNetworkRetries < MAX_RETRIES) {
+                     DEBUG_PRINT(".");delay(1000);
                      DEBUG_PRINTLN(" fail");
-                     delay(10000);
+                     delay(8000);
                      return;
                  }
                  DEBUG_PRINTLN(" success");
@@ -322,7 +328,7 @@
                  if (modem.isNetworkConnected()) { DEBUG_PRINTLN("Network connected"); }
  
                  if (!verifyGPRS()) {
-                     delay(10000);
+                     delay(8000);
                      return;
                  }
  
@@ -330,17 +336,23 @@
                  DEBUG_PRINTLN("Modem Name: " + name);
  
                  DEBUG_PRINTLN("========MQTT Print.=======");
-                 if (mqtt.connected()) {
-                     DEBUG_PRINTLN("MQTT connection established.");
-                 } else {
-                     DEBUG_PRINTLN("MQTT connection failed.");
+                 while (!mqtt.connected() && counterNetworkRetries < MAX_RETRIES) {
+                     DEBUG_PRINTLN("Attempting MQTT connection...");
+                     if (mqttConnect()) {
+                         DEBUG_PRINTLN("MQTT Connected!");
+                     } else {
+                         DEBUG_PRINTLN("MQTT Connection Failed.");
+                         counterNetworkRetries++;
+                     }
                  }
                  DEBUG_PRINTLN("===========================");
  
                  // Disconnect GPRS
                  modemPowerOff();
+                 DEBUG_PRINTLN("========GSM Print Finished.=======");
              }            
              dataLogged = true;  // Ensure logging only happens once
+             DEBUG_PRINTLN("========Datalogging Print Finished.=======");
          }
      
          // Delay for 3 seconds before sleeping (non-blocking)

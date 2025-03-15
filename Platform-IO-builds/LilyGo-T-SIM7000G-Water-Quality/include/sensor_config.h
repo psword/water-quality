@@ -49,6 +49,6 @@ extern const unsigned long readDelay;    // Global constant for the delay betwee
 #define READING_DURATION 4000           // Duration in milliseconds for sensor sampling
 #define uS_TO_S_FACTOR 1000000           // Conversion factor from microseconds to seconds
 #define S_TO_MIN_FACTOR 60               // Conversion factor from seconds to minutes
-#define TIME_TO_SLEEP 2                  // Duration in minutes for deep sleep between readings
+#define TIME_TO_SLEEP 60                  // Duration in minutes for deep sleep between readings
 
 #endif // SENSOR_CONFIG

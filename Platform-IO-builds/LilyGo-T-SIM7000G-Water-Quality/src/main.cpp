@@ -52,7 +52,7 @@ unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR
 TemperatureSensor tempSensorInstance(ONE_WIRE_BUS);
 
 // TDS Sensor: Specify kCoefficient, reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
-TdsSensor tdsSensorInstance(0.02, 25.0, TDS_SENSOR_MUX, 10);
+TdsSensor tdsSensorInstance(0.019, 25.0, TDS_SENSOR_MUX, 10);
 
 // pH Sensor: reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
 pHSensor pHSensorInstance(PH_SENSOR_MUX, 10);
@@ -335,7 +335,7 @@ void loop()
             logDataWithTimestamp(SD, filename, rtc);
             DEBUG_PRINTLN("========SD Write.=======");
 
-            if (bootCounter % 5 == 0)
+            if (bootCounter % 2 == 0)
             {
                 DEBUG_PRINTLN("========GSM Print.=======");
                 // Initialize Modem

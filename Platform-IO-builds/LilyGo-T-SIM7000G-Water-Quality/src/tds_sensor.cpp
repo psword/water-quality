@@ -132,13 +132,14 @@ float TdsSensor::adjustTds(float voltage, float temperature)
         return NAN;
     }
 
+    float rawEC = (133.42 * voltage * voltage * voltage - 255.86 * voltage * voltage + 857.39 * voltage);
     float tempCorrection = 1.0 + kCoefficient * (temperature - referenceTemp);
-    float compensationVoltage = voltage / tempCorrection;
-    float rawTds = (133.42 * voltage * voltage * voltage - 255.86 * voltage * voltage + 857.39 * voltage) * 0.5;
+    float compensatedEC = rawEC / tempCorrection;
+    float rawTds = compensatedEC * 0.5;
     float correctedTds = 1.1297 * rawTds - 9.52;
 
     DEBUG_PRINT("Temperature Correction Factor: "); DEBUG_PRINTLN(tempCorrection);
-    DEBUG_PRINT("Compensated Voltage: "); DEBUG_PRINTLN(compensationVoltage);
+    DEBUG_PRINT("Compensated EC: "); DEBUG_PRINTLN(compensatedEC);
     DEBUG_PRINT("Raw TDS: "); DEBUG_PRINTLN(rawTds);
     DEBUG_PRINT("Corrected TDS: "); DEBUG_PRINTLN(correctedTds);
 

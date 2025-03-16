@@ -17,10 +17,14 @@ TdsSensor::TdsSensor(float kCoeff, float refTemp, ADS1115_MUX inputMux, int iter
     : kCoefficient(kCoeff), referenceTemp(refTemp), sensorInputMux(inputMux), tdsSenseIterations(iterations), analogBufferIndex(0)
 {
     DEBUG_PRINTLN("TdsSensor constructor called");
-    DEBUG_PRINT("kCoefficient: "); DEBUG_PRINTLN(kCoeff);
-    DEBUG_PRINT("referenceTemp: "); DEBUG_PRINTLN(refTemp);
-    DEBUG_PRINT("sensorInputMux: "); DEBUG_PRINTLN(sensorInputMux);
-    DEBUG_PRINT("tdsSenseIterations: "); DEBUG_PRINTLN(tdsSenseIterations);
+    DEBUG_PRINT("kCoefficient: ");
+    DEBUG_PRINTLN(kCoeff);
+    DEBUG_PRINT("referenceTemp: ");
+    DEBUG_PRINTLN(refTemp);
+    DEBUG_PRINT("sensorInputMux: ");
+    DEBUG_PRINTLN(sensorInputMux);
+    DEBUG_PRINT("tdsSenseIterations: ");
+    DEBUG_PRINTLN(tdsSenseIterations);
 
     analogBuffer = new float[tdsSenseIterations];
     if (analogBuffer == nullptr)
@@ -30,7 +34,8 @@ TdsSensor::TdsSensor(float kCoeff, float refTemp, ADS1115_MUX inputMux, int iter
     else
     {
         DEBUG_PRINTLN("Memory allocated for analog buffer");
-        for (int i = 0; i < tdsSenseIterations; i++) {
+        for (int i = 0; i < tdsSenseIterations; i++)
+        {
             analogBuffer[i] = 0.0;
         }
     }
@@ -69,17 +74,22 @@ void TdsSensor::init()
  */
 void TdsSensor::analogReadAction()
 {
-    float voltage = adcTDS.getResult_V();
-    float probeVoltage = voltage * 2;
-    
+    double voltage = adcTDS.getResult_mV();     // I feel like mV gives more precision
+    double probeVoltage = (voltage * 2) / 1000; // Convert to V (from mV) and adjust for voltage divider
+
     // Check for NaN or infinite values before storing
-    if (!isnan(probeVoltage) && !isinf(probeVoltage)) {
+    if (!isnan(probeVoltage) && !isinf(probeVoltage))
+    {
         analogBuffer[analogBufferIndex] = probeVoltage;
         analogBufferIndex = (analogBufferIndex + 1) % tdsSenseIterations; // Circular buffer
 
-        DEBUG_PRINT("Raw ADC Voltage: "); DEBUG_PRINTLN(voltage);
-        DEBUG_PRINT("Probe Voltage (adjusted): "); DEBUG_PRINTLN(probeVoltage);
-    } else {
+        DEBUG_PRINT("Raw ADC Voltage: ");
+        DEBUG_PRINTLN(voltage);
+        DEBUG_PRINT("Probe Voltage (adjusted): ");
+        DEBUG_PRINTLN(probeVoltage);
+    }
+    else
+    {
         DEBUG_PRINTLN("WARNING: Invalid ADC reading, skipping storage.");
     }
 }
@@ -96,11 +106,15 @@ float TdsSensor::computeMedian()
     DEBUG_PRINTLN("Sorted analog buffer:");
     for (int i = 0; i < tdsSenseIterations; i++)
     {
-        if (isnan(sortedBuffer[i]) || isinf(sortedBuffer[i])) {
-            DEBUG_PRINT("ERROR: Invalid value detected in buffer: "); 
+        if (isnan(sortedBuffer[i]) || isinf(sortedBuffer[i]))
+        {
+            DEBUG_PRINT("ERROR: Invalid value detected in buffer: ");
             DEBUG_PRINTLN(sortedBuffer[i]);
-        } else {
-            DEBUG_PRINT(sortedBuffer[i]); DEBUG_PRINT(" ");
+        }
+        else
+        {
+            DEBUG_PRINT(sortedBuffer[i]);
+            DEBUG_PRINT(" ");
         }
     }
     DEBUG_PRINTLN("");
@@ -115,7 +129,8 @@ float TdsSensor::computeMedian()
         medianValue = sortedBuffer[tdsSenseIterations / 2];
     }
 
-    DEBUG_PRINT("Computed Median: "); DEBUG_PRINTLN(medianValue);
+    DEBUG_PRINT("Computed Median: ");
+    DEBUG_PRINTLN(medianValue);
     return medianValue;
 }
 
@@ -124,10 +139,13 @@ float TdsSensor::computeMedian()
  */
 float TdsSensor::adjustTds(float voltage, float temperature)
 {
-    DEBUG_PRINT("Adjusting TDS with voltage: "); DEBUG_PRINT(voltage);
-    DEBUG_PRINT(" and temperature: "); DEBUG_PRINTLN(temperature);
+    DEBUG_PRINT("Adjusting TDS with voltage: ");
+    DEBUG_PRINT(voltage);
+    DEBUG_PRINT(" and temperature: ");
+    DEBUG_PRINTLN(temperature);
 
-    if (isnan(voltage) || isinf(voltage)) {
+    if (isnan(voltage) || isinf(voltage))
+    {
         DEBUG_PRINTLN("ERROR: Voltage is NaN or infinite!");
         return NAN;
     }
@@ -136,12 +154,23 @@ float TdsSensor::adjustTds(float voltage, float temperature)
     float tempCorrection = 1.0 + kCoefficient * (temperature - referenceTemp);
     float compensatedEC = rawEC / tempCorrection;
     float rawTds = compensatedEC * 0.5;
-    float correctedTds = 1.1297 * rawTds - 9.52;
+    // float correctedTds = 1.1297 * rawTds - 9.52; example calculated formula with 633.79 ppm and 8.42 ppm
+    // Calibration adjustment
+    float slope = (706.5 - 0) / (measuredConductivityStandard - measuredDeionizedWater);
+    float intercept = 0 - slope * measuredDeionizedWater;
+    float correctedTds = slope * rawTds + intercept;
 
-    DEBUG_PRINT("Temperature Correction Factor: "); DEBUG_PRINTLN(tempCorrection);
-    DEBUG_PRINT("Compensated EC: "); DEBUG_PRINTLN(compensatedEC);
-    DEBUG_PRINT("Raw TDS: "); DEBUG_PRINTLN(rawTds);
-    DEBUG_PRINT("Corrected TDS: "); DEBUG_PRINTLN(correctedTds);
+    DEBUG_PRINT("Temperature Correction Factor: ");
+    DEBUG_PRINTLN(tempCorrection);
+    DEBUG_PRINT("Compensated EC: ");
+    DEBUG_PRINTLN(compensatedEC);
+    DEBUG_PRINT("Raw TDS: ");
+    DEBUG_PRINTLN(rawTds);
+    DEBUG_PRINTLN("Calibration Adjustment:");
+    DEBUG_PRINT("Slope: "); DEBUG_PRINTLN(slope);
+    DEBUG_PRINT("Intercept: "); DEBUG_PRINTLN(intercept);
+    DEBUG_PRINT("Corrected TDS: ");
+    DEBUG_PRINTLN(correctedTds);
 
     return correctedTds;
 }
@@ -153,13 +182,14 @@ float TdsSensor::read(float temperature)
 {
     DEBUG_PRINTLN("Starting TDS reading...");
     analogReadAction();
-    
+
     float medianSensorValue = computeMedian();
     float voltage = medianSensorValue;
     float tdsValue = adjustTds(voltage, temperature);
     float finalTDS = tdsValue;
 
-    DEBUG_PRINT("Final TDS Value: "); DEBUG_PRINTLN(tdsValue);
+    DEBUG_PRINT("Final TDS Value: ");
+    DEBUG_PRINTLN(tdsValue);
     return tdsValue;
 }
 

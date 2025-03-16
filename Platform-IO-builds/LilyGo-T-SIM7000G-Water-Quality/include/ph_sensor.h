@@ -4,35 +4,33 @@
 #define pHSensor_h
 
 #include "sensor.h"
-#include <ADS1115_WE.h>       // ADS1115 Library for TDS and pH sensors
+#include <ADS1115_WE.h> // ADS1115 Library for TDS and pH sensors
 
-#define I2C_ADDRESS_PH 0x4B                  // I2C address for PH sensor through the ADS1115
+#define I2C_ADDRESS_PH 0x4B // I2C address for PH sensor through the ADS1115
 
 /**
  * pHSensor class, derived from Sensor, to handle pH sensor operations.
  */
-class pHSensor : public Sensor 
+class pHSensor : public Sensor
 {
 private:
     const ADS1115_MUX sensorInputMux; // ADC multiplexer input for TDS sensor
-    const int pHSenseIterations;   // Number of pH measurements to retain for buffer
-    
-    float *analogBuffer;           // Dynamic array for buffer
-    int analogBufferIndex;         // Index for circular buffer
-    float averageVoltage;          // Store the average voltage
+    const int pHSenseIterations;      // Number of pH measurements to retain for buffer
 
-    float acidVoltage    = 1.01662;    //buffer solution 4.01 at 25C
-    float neutralVoltage = .76050;     //buffer solution 7.0 at 25C
-    float baseVoltage    = .53462;     //buffer solution 10.0 at 25C
-    float probeVoltage;                //voltage from probe
+    float *analogBuffer;   // Dynamic array for buffer
+    int analogBufferIndex; // Index for circular buffer
+    float averageVoltage;  // Store the average voltage
 
+    float acidVoltage = 1.01662;   // buffer solution 4.01 at 25C
+    float neutralVoltage = .76050; // buffer solution 7.0 at 25C
+    float baseVoltage = .53462;    // buffer solution 10.0 at 25C
+    float probeVoltage;            // voltage from probe
 
 public:
     /**
      * Constructor for ph sensor.
      */
     pHSensor(ADS1115_MUX inputMux, int iterations = 10);
-
 
     /**
      * Destructor to clean up resources.

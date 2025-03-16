@@ -45,7 +45,7 @@ const char *filename = "/logs/sensor_log.txt";                                  
 bool codeExecuted = false;                                                        // Flag to track if code has executed previously
 bool dataLogged = false;                                                          // Flag to track if data has been logged
 RTC_DATA_ATTR u_int32_t bootCounter = 0;                                          // Counter to track number of boots
-unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR; // Sleep duration in microseconds
+static const unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR; // Sleep duration in microseconds
 
 // Instantiate sensor objects
 // Temperature Sensor: Specify OneWire PIN and the number of samples in the buffer

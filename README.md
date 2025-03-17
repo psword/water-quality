@@ -27,18 +27,24 @@
 ### PlatformIO.ini
 
 [env:esp32dev]
+
 platform = espressif32@~5.0.0
+
 board = esp32dev
+
 framework = arduino
-lib_deps = 
-	paulstoffregen/OneWire@^2.3.8
-	milesburton/DallasTemperature@^3.11.0
-	wollewald/ADS1115_WE@^1.5.4
-	vshymanskyy/TinyGSM
-	naguissa/uRTCLib@^6.9.2
-	naguissa/uEEPROMLib@^1.2.1
-	bblanchon/ArduinoJson@^7.3.1
-	knolleary/PubSubClient@^2.8
+
+- lib_deps = 
+	- paulstoffregen/OneWire@^2.3.8
+	- milesburton/DallasTemperature@^3.11.0
+	- wollewald/ADS1115_WE@^1.5.4
+	- vshymanskyy/TinyGSM
+	- naguissa/uRTCLib@^6.9.2
+	- naguissa/uEEPROMLib@^1.2.1
+	- bblanchon/ArduinoJson@^7.3.1
+	- knolleary/PubSubClient@^2.8
+
 [platformio]
-description = ESP32 board connected to three sensors
+
+- description = ESP32 board connected to three sensors
  

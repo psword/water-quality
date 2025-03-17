@@ -29,6 +29,13 @@ static const int SD_MOSI = 15;           // SPI MOSI pin for the SD card module
 static const int SD_MISO = 2;            // SPI MISO pin for the SD card module
 static const int SD_SCLK = 14;            // SPI SCLK pin for the SD card module
 
+// LilyGO T-SIM7000G Pinout
+static const int UART_BAUD = 115200; // Baud rate for UART communication
+static const int PIN_DTR = 25;      // DTR pin for SIM7000G
+static const int PIN_TX = 27;       // TX pin for SIM7000G
+static const int PIN_RX = 26;       // RX pin for SIM7000G
+static const int PWR_PIN = 4;       // Power pin for SIM7000G
+
 // Others
 extern float finalTemp;                  // Global variable to store the final temperature value (write to SD)
 extern float finalTDS;                   // Global variable to store the final TDS value (write to SD)
@@ -42,6 +49,6 @@ extern const unsigned long readDelay;    // Global constant for the delay betwee
 #define READING_DURATION 4000           // Duration in milliseconds for sensor sampling
 #define uS_TO_S_FACTOR 1000000           // Conversion factor from microseconds to seconds
 #define S_TO_MIN_FACTOR 60               // Conversion factor from seconds to minutes
-#define TIME_TO_SLEEP 2                  // Duration in minutes for deep sleep between readings
+#define TIME_TO_SLEEP 60                  // Duration in minutes for deep sleep between readings
 
 #endif // SENSOR_CONFIG

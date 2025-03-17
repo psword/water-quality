@@ -2,9 +2,9 @@
 #define TDSSENSOR_H
 
 #include "sensor.h"
-#include <ADS1115_WE.h>       // ADS1115 Library for TDS and pH sensors
+#include <ADS1115_WE.h> // ADS1115 Library for TDS and pH sensors
 
-#define I2C_ADDRESS_TDS 0x4A                 // I2C address for the TDS sensor through the ADS1115
+#define I2C_ADDRESS_TDS 0x4A // I2C address for the TDS sensor through the ADS1115
 
 /**
  * TdsSensor class to read TDS (Total Dissolved Solids) data.
@@ -12,13 +12,15 @@
 class TdsSensor : public Sensor
 {
 private:
-    const float kCoefficient;     // 2% Coefficient calculation
-    const float referenceTemp;    // Reference temperature for the TDS sensor
-    const int tdsSenseIterations; // Number of measurements to retain for buffer
+    const float kCoefficient;         // 2% Coefficient calculation
+    const float referenceTemp;        // Reference temperature for the TDS sensor
+    const int tdsSenseIterations;     // Number of measurements to retain for buffer
     const ADS1115_MUX sensorInputMux; // ADC multiplexer input for TDS sensor
 
-    float *analogBuffer;           // Dynamic array for buffer
-    int analogBufferIndex;         // Index for the circular buffer
+    float *analogBuffer;                         // Dynamic array for buffer
+    int analogBufferIndex;                       // Index for the circular buffer
+    float measuredConductivityStandard = 633.79; // Measured conductivity standard for calibration
+    float measuredDeionizedWater = 8.42;         // Measured deionized water for calibration
 
 public:
     /**

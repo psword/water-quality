@@ -6,7 +6,7 @@
 #ifdef DEBUG_ON
   #define DEBUG_PRINT(...) Serial.print(__VA_ARGS__)
   #define DEBUG_PRINTLN(...) Serial.println(__VA_ARGS__)
-  #define DEBUG_PRINTF(...) Serial.printF(__VA_ARGS__)
+  #define DEBUG_PRINTF(...) Serial.printf(__VA_ARGS__)
   #define DEBUG_FLUSH() Serial.flush()
 #else
   #define DEBUG_PRINT(...)  // Empty

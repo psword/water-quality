@@ -11,13 +11,13 @@
 /**
  * TemperatureSensor class, derived from Sensor, to read temperature data from a DallasTemperature sensor.
  */
-class TemperatureSensor : public Sensor 
+class TemperatureSensor : public Sensor
 {
 private:
     const int tempSenseIterations; // Number of measurements to retain for buffer
     OneWire oneWire;
     DallasTemperature sensors;
-    float* analogBuffer; // Dynamic array for buffer
+    float *analogBuffer;   // Dynamic array for buffer
     int analogBufferIndex; // Index for the circular buffer
 
 public:

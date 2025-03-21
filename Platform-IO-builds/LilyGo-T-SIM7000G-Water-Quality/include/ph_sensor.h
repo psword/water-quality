@@ -8,9 +8,7 @@
 
 #define I2C_ADDRESS_PH 0x4B // I2C address for PH sensor through the ADS1115
 
-/**
- * pHSensor class, derived from Sensor, to handle pH sensor operations.
- */
+// pHSensor class, derived from Sensor, to handle pH sensor operations.
 class pHSensor : public Sensor
 {
 private:
@@ -27,61 +25,41 @@ private:
     float probeVoltage;            // voltage from probe
 
 public:
-    /**
-     * Constructor for ph sensor.
-     */
+    // Constructor for ph sensor.
     pHSensor(ADS1115_MUX inputMux, int iterations = 10);
 
-    /**
-     * Destructor to clean up resources.
-     */
+    // Destructor to clean up resources.
     ~pHSensor();
 
-    /**
-     * Returns the average voltage.
-     * @return The average voltage.
-     */
+    // Returns the average voltage.
+    // @return The average voltage.
     float getAverageVoltage() const;
 
-    /**
-     * Reads analog value from pH sensor and stores in buffer.
-     */
+    // Reads analog value from pH sensor and stores in buffer.
     void analogReadAction();
 
-    /**
-     * Computes the median reading from the buffer.
-     * @return The median reading.
-     */
+    // Computes the median reading from the buffer.
+    // @return The median reading.
     float computeMedian();
 
-    /**
-     * Adjusts pH based on temperature.
-     * @param voltage The voltage to adjust.
-     * @param temperature The temperature to adjust with.
-     * @return The adjusted pH value.
-     */
+    // Adjusts pH based on temperature.
+    // @param voltage The voltage to adjust.
+    // @param temperature The temperature to adjust with.
+    // @return The adjusted pH value.
     float adjustpH(float voltage, float temperature);
 
-    /**
-     * Computes the pH value.
-     * @param temperature The temperature to compute with.
-     * @return The computed pH value.
-     */
+    // Computes the pH value.
+    // @param temperature The temperature to compute with.
+    // @return The computed pH value.
     float read(float temperature) override;
 
-    /**
-     * Initializes the sensor, if needed.
-     */
+    // Initializes the sensor, if needed.
     void init() override;
 
-    /**
-     * Shuts down the sensor, no operation.
-     */
+    // Shuts down the sensor, no operation.
     void shutdown() override;
 
-    /**
-     * Stabilizes the sensor with a timer, possible for future operation.
-     */
+    // Stabilizes the sensor with a timer, possible for future operation.
     void stabilize() override;
 };
 

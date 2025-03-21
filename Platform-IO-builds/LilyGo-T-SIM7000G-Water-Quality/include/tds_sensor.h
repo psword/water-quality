@@ -6,9 +6,7 @@
 
 #define I2C_ADDRESS_TDS 0x4A // I2C address for the TDS sensor through the ADS1115
 
-/**
- * TdsSensor class to read TDS (Total Dissolved Solids) data.
- */
+// TdsSensor class to read TDS (Total Dissolved Solids) data.
 class TdsSensor : public Sensor
 {
 private:
@@ -19,54 +17,36 @@ private:
 
     float *analogBuffer;                         // Dynamic array for buffer
     int analogBufferIndex;                       // Index for the circular buffer
-    float measuredConductivityStandard = 633.79; // Measured conductivity standard for calibration
-    float measuredDeionizedWater = 8.42;         // Measured deionized water for calibration
-
+    float measuredConductivityStandard = 636.2125; // Measured conductivity standard for calibration
+    float measuredDeionizedWater = 11.027;         // Measured deionized water for calibration
+    
 public:
-    /**
-     * Constructor for TdsSensor.
-     */
+    // Constructor for TdsSensor.
     TdsSensor(float kCoeff, float refTemp, ADS1115_MUX inputMux, int iterations = 10);
 
-    /**
-     * Destructor for TdsSensor.
-     */
+    // Destructor for TdsSensor.
     ~TdsSensor();
 
-    /**
-     * Reads analog value from sensor and stores in buffer.
-     */
+    // Reads analog value from sensor and stores in buffer.
     void analogReadAction();
 
-    /**
-     * Computes the median reading from the buffer.
-     * @return The median value.
-     */
+    // Computes the median reading from the buffer.
+    // @return The median value.
     float computeMedian();
 
-    /**
-     * Adjusts the TDS reading based on temperature.
-     */
+    // Adjusts the TDS reading based on temperature.
     float adjustTds(float voltage, float temperature);
 
-    /**
-     * Reads and adjusts the TDS value.
-     */
+    // Reads and adjusts the TDS value.
     float read(float temperature) override;
 
-    /**
-     * Initializes the sensor.
-     */
+    // Initializes the sensor.
     void init() override;
 
-    /**
-     * Shuts down the sensor.
-     */
+    // Shuts down the sensor.
     void shutdown() override;
 
-    /**
-     * Stabilizes the sensor.
-     */
+    // Stabilizes the sensor.
     void stabilize() override;
 };
 

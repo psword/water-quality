@@ -51,10 +51,10 @@ static const unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * u
 // Temperature Sensor: Specify OneWire PIN and the number of samples in the buffer
 TemperatureSensor tempSensorInstance(ONE_WIRE_BUS);
 
-// TDS Sensor: Specify kCoefficient, reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
+// TDS Sensor: Specify kCoefficient, reference temperature, ADS1115 MUX channel, and buffer size
 TdsSensor tdsSensorInstance(0.019, 25.0, TDS_SENSOR_MUX, 10);
 
-// pH Sensor: reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
+// pH Sensor: ADS1115 MUX channel, and buffer size
 pHSensor pHSensorInstance(PH_SENSOR_MUX, 10);
 
 // Create state machine instances for each sensor
@@ -114,10 +114,10 @@ void logDataWithTimestamp(fs::FS &fs, String filename, uRTCLib rtc)
     rtc.refresh();
 
     // Time Format: YY/MM/DD Day HH:MM:SS
-    sprintf(logEntry, "%02d/%02d/%02d %s %02d:%02d:%02d; Temp: %.2f; TDS: %.2f; pH: %.2f\n",
+    sprintf(logEntry, "%02d/%02d/%02d %s %02d:%02d:%02d; finalTemp: %.2f; finalTDS: %.2f; rawTDS: %.2f; finalpH: %.2f; voltagePh: %.2f\n",
             rtc.year(), rtc.month(), rtc.day(),
             daysOfTheWeek[rtc.dayOfWeek() - 1], // Adjust day index (1-7 → 0-6)
-            rtc.hour(), rtc.minute(), rtc.second(), finalTemp, finalTDS, finalpH);
+            rtc.hour(), rtc.minute(), rtc.second(), finalTemp, finalTds, rawTds, finalpH, voltagePh);
 
     // Write the formatted log entry to the file
     logData(fs, filename, logEntry);
@@ -199,8 +199,10 @@ void sendMQTT()
     doc["Device"] = "LilyGo-T-SIM7000G";
     doc["Timestamp"] = rtcVerify(rtc);
     doc["Temp"] = finalTemp;
-    doc["TDS"] = finalTDS;
+    doc["TDS"] = finalTds;
+    doc["rawTDS"] = rawTds;
     doc["pH"] = finalpH;
+    doc["voltagePh"] = voltagePh;
     doc["bootCounter"] = bootCounter;
     doc["cycleTime"] = millis() / 1000 + 7; // Add 7 seconds to account for delays
 

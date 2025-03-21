@@ -10,6 +10,8 @@
 // Define the ADS1115 object
 ADS1115_WE adcPH(I2C_ADDRESS_PH);
 
+float voltagePh = 0.0; // voltage for pH sensor
+
 pHSensor::pHSensor(ADS1115_MUX inputMux, int iterations)
     : sensorInputMux(inputMux), pHSenseIterations(iterations), analogBufferIndex(0),
       acidVoltage(1.02513), neutralVoltage(.75525), baseVoltage(.50250), probeVoltage(0.0)
@@ -135,6 +137,7 @@ float pHSensor::adjustpH(float voltage, float temperature)
 {
     DEBUG_PRINT("Adjusting pH with voltage: ");
     DEBUG_PRINT(voltage);
+    voltagePh = voltage; // Store the voltage for logging
     DEBUG_PRINT(" and temperature: ");
     DEBUG_PRINTLN(temperature);
 

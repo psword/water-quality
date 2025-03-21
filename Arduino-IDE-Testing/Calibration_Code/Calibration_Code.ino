@@ -47,15 +47,16 @@ DallasTemperature sensors(&oneWire);
 ADS1115_WE adc_ph = ADS1115_WE(I2C_ADDRESS_PH);
 ADS1115_WE adc_tds = ADS1115_WE(I2C_ADDRESS_TDS);
 
-float acidVoltage    = 1016.62;    //buffer solution 4.0 at 25C
-float neutralVoltage = 760.50;     //buffer solution 7.0 at 25C
-float baseVoltage    = 534.62;     //buffer solution 10.0 at 25C
-float neutralCompensationVoltage = neutralVoltage*2;
-float acidCompensationVoltage = acidVoltage*2;
-float baseCompensationVoltage = baseVoltage*2;
-float factoryNeutralVoltage = 1500; //ph 7.0
-int phDistance = 3; //distance from neutral ph 7.0
+// float acidVoltage    = 1016.62;    //buffer solution 4.0 at 25C
+// float neutralVoltage = 760.50;     //buffer solution 7.0 at 25C
+// float baseVoltage    = 534.62;     //buffer solution 10.0 at 25C
+// float neutralCompensationVoltage = neutralVoltage*2;
+// float acidCompensationVoltage = acidVoltage*2;
+// float baseCompensationVoltage = baseVoltage*2;
+// float factoryNeutralVoltage = 1500; //ph 7.0
 float referenceTemp = 25.0; // reference temperature of 25 deg C
+float measuredConductivityStandard = 636.2125; // Measured conductivity standard for calibration
+float measuredDeionizedWater = 11.027;         // Measured deionized water for calibration
 
 
 void setup() {
@@ -70,14 +71,14 @@ void setup() {
   if(!adc_ph.init()){
     Serial.print("ADS1115 No 1 not connected!");
   }
-  adc_ph.setVoltageRange_mV(ADS1115_RANGE_4096);
+  adc_ph.setVoltageRange_mV(ADS1115_RANGE_6144);
   adc_ph.setMeasureMode(ADS1115_CONTINUOUS); 
   adc_ph.setCompareChannels(ADS1115_COMP_0_GND);
   
   if(!adc_tds.init()){
     Serial.print("ADS1115 No 2 not connected!");
   }
-  adc_tds.setVoltageRange_mV(ADS1115_RANGE_4096);
+  adc_tds.setVoltageRange_mV(ADS1115_RANGE_6144);
   adc_tds.setMeasureMode(ADS1115_CONTINUOUS); 
   adc_tds.setCompareChannels(ADS1115_COMP_0_GND);
 
@@ -88,6 +89,7 @@ void setup() {
 
 void loop() {
   float voltage = 0.0;
+  float probeVoltage = 0.0;
   
    sensors.requestTemperatures(); 
   float temperatureC = sensors.getTempCByIndex(0);
@@ -97,43 +99,55 @@ void loop() {
   Serial.print(temperatureF);
   Serial.println("ºF");
   
-  
+  /*
+  Serial.println("****************BEGIN PH**********************");
   // BEGIN PH
   voltage = adc_ph.getResult_mV(); // 10000 Ohm Resistor Cuts Voltage in half
-  float probeVoltage = voltage*2;
+  probeVoltage = voltage*2;
   Serial.println("Voltage [mV], ADS1115 PH: ");
   Serial.println(voltage);
   Serial.println(probeVoltage);
 
   // Build pH calibration code
-  double slope = ((7.0 - 4.01) / (neutralVoltage * 2 - acidVoltage * 2) + (7 - 10.0) / (neutralVoltage * 2 - baseVoltage * 2)) / 2;
-  double intercept = 7.0 - slope * (neutralVoltage * 2);
-  double compensatedSlope = slope * ((temperatureC + 273.15) / (25.0 + 273.15));
-  double pHValue = compensatedSlope * voltage + intercept;
+  double slopePH = ((7.0 - 4.01) / (neutralVoltage * 2 - acidVoltage * 2) + (7 - 10.0) / (neutralVoltage * 2 - baseVoltage * 2)) / 2;
+  double interceptPH = 7.0 - slopePH * (neutralVoltage * 2);
+  double compensatedSlope = slopePH * ((temperatureC + 273.15) / (25.0 + 273.15));
+  double pHValue = compensatedSlope * voltage + interceptPH;
   Serial.print("slope:");
-  Serial.print(slope);
+  Serial.print(slopePH);
   Serial.print(",intercept:");
-  Serial.println(intercept);
-  float phValue = slope*(probeVoltage)+intercept;  //y = k*x + b
-  Serial.println(phValue);
+  Serial.println(interceptPH);
+  float phValue = slopePH*(probeVoltage)+interceptPH;  //y = k*x + b
+  Serial.println(phValue);*/
 	
-	
+	Serial.println("****************BEGIN TDS**********************");
   // BEGIN TDS
   // Build Tds Calibration code
-  voltage = adc_tds.getResult_V(); // 10000 Ohm Resistor Cuts Voltage in half
-  probeVoltage = voltage*2;
-  Serial.println("Voltage [V], ADS1115 No 2: ");
-  Serial.println(voltage);
-  Serial.println(probeVoltage);
+  voltage = adc_tds.getResult_V(); // 10kOhm resistor present
+  probeVoltage = voltage * 3.058; // multiply by 10kOhm factor
+  Serial.print("Voltage [V], ADS1115 No 2: ");
+  // Serial.println(voltage);
+  // Serial.println("Converted to Voltage [V], ADS1115 TDS: ");
+  Serial.println(probeVoltage,12);
   float kCoefficient = 0.019;
   float rawEC = (133.42 * probeVoltage * probeVoltage * probeVoltage - 255.86 * probeVoltage * probeVoltage + 857.39 * probeVoltage);
+  Serial.print("TDS before Temp Correction and fitting function: ");
+  Serial.println(rawEC * 0.5);
   float tempCorrection = 1.0 + kCoefficient * (temperatureC - referenceTemp);
   float compensatedEC = rawEC / tempCorrection;
   float rawTds = compensatedEC * 0.5;
-  float correctedTds = 1.1297 * rawTds - 9.52;
-  Serial.print("rawTds: ");
+  Serial.print("TDS after Temp Correction and before fitting function: ");
   Serial.println(rawTds);
-  Serial.print("correctedTds: ");
+  float slopeTDS = (706.5 - 5) / (measuredConductivityStandard - measuredDeionizedWater);
+  float interceptTDS = 0 - slopeTDS * measuredDeionizedWater;
+  float correctedTds = slopeTDS * rawTds + interceptTDS;
+  Serial.print("slope: ");
+  Serial.println(slopeTDS);
+  Serial.print("intercept:");
+  Serial.println(interceptTDS);
+  // Serial.print("rawTds: ");
+  // Serial.println(rawTds);
+  Serial.print("After Temp Correction and fitting function: correctedTds = ");
   Serial.println(correctedTds);
  
   Serial.println("****************************");  

@@ -337,12 +337,12 @@ void loop()
             logDataWithTimestamp(SD, filename, rtc);
             DEBUG_PRINTLN("========SD Write.=======");
 
-            if (bootCounter % 2 == 0)
+            if (bootCounter % 1 == 0)
             {
                 DEBUG_PRINTLN("========GSM Print.=======");
                 // Initialize Modem
                 Serial1.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
-                DEBUG_PRINTLN("Wait for modem...setting GSM modul baud rate to 9600");
+                DEBUG_PRINTLN("Wait for modem...setting GSM module baud rate to 9600");
                 Serial1.begin(9600);
                 delay(6000);
                 modemPowerOn();

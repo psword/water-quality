@@ -47,17 +47,20 @@ DallasTemperature sensors(&oneWire);
 ADS1115_WE adc_ph = ADS1115_WE(I2C_ADDRESS_PH);
 ADS1115_WE adc_tds = ADS1115_WE(I2C_ADDRESS_TDS);
 
-// float acidVoltage    = 1016.62;    //buffer solution 4.0 at 25C
-// float neutralVoltage = 760.50;     //buffer solution 7.0 at 25C
-// float baseVoltage    = 534.62;     //buffer solution 10.0 at 25C
-// float neutralCompensationVoltage = neutralVoltage*2;
-// float acidCompensationVoltage = acidVoltage*2;
-// float baseCompensationVoltage = baseVoltage*2;
-// float factoryNeutralVoltage = 1500; //ph 7.0
+float acidVoltage    = 1021.501;    //buffer solution 4.01 at 25C
+float neutralVoltage = 785.4393;     //buffer solution 7.0 at 25C
+float baseVoltage    = 542.8138;     //buffer solution 10.0 at 25C
+// float neutralCompensationVoltage = neutralVoltage*1.912;
+// float acidCompensationVoltage = acidVoltage*1.912;
+// float baseCompensationVoltage = baseVoltage*1.912;
+float factoryNeutralVoltage = 1500; //ph 7.0
 float referenceTemp = 25.0; // reference temperature of 25 deg C
-float measuredConductivityStandard = 636.2125; // Measured conductivity standard for calibration
+float measuredConductivityStandard = 603.1467; // Measured conductivity standard for calibration
 float measuredDeionizedWater = 11.027;         // Measured deionized water for calibration
-
+int pHSenseIterations = 50;
+int tdsSenseIterations = 50;
+float *analogBuffer;   // Dynamic array for buffer, NOTE: there is no destructor for the buffer
+int analogBufferIndex; // Index for circular buffer
 
 void setup() {
   Wire.begin();
@@ -85,13 +88,20 @@ void setup() {
   pinMode(18, OUTPUT);
   digitalWrite(18, HIGH);
   sensors.begin();
+
+  // Allocate memory for analog buffer
+  analogBuffer = new float[pHSenseIterations];
+  for (int i = 0; i < pHSenseIterations; i++)
+    {
+      analogBuffer[i] = 0.0;
+    }
 }
 
 void loop() {
   float voltage = 0.0;
   float probeVoltage = 0.0;
   
-   sensors.requestTemperatures(); 
+  sensors.requestTemperatures(); 
   float temperatureC = sensors.getTempCByIndex(0);
   float temperatureF = sensors.getTempFByIndex(0);
   Serial.print(temperatureC);
@@ -99,56 +109,101 @@ void loop() {
   Serial.print(temperatureF);
   Serial.println("ºF");
   
-  /*
-  Serial.println("****************BEGIN PH**********************");
+  
+  // Serial.println("****************BEGIN PH**********************");
   // BEGIN PH
-  voltage = adc_ph.getResult_mV(); // 10000 Ohm Resistor Cuts Voltage in half
-  probeVoltage = voltage*2;
-  Serial.println("Voltage [mV], ADS1115 PH: ");
-  Serial.println(voltage);
-  Serial.println(probeVoltage);
+  // voltage = adc_ph.getResult_mV(); // 10kOhm resistor present
+  // probeVoltage = voltage*1.912;  // multiply by 10kOhm factor
+  // Serial.println("Voltage [mV], ADS1115 PH: ");
+  // Serial.println(voltage);
+  // Serial.println(probeVoltage, 12);
 
+  // analogBuffer[analogBufferIndex] = probeVoltage;
+  // analogBufferIndex = (analogBufferIndex + 1) % pHSenseIterations;
+  // float sortedBuffer[pHSenseIterations];
+  // std::copy(analogBuffer, analogBuffer + pHSenseIterations, sortedBuffer);
+  // std::sort(sortedBuffer, sortedBuffer + pHSenseIterations);
+  // float medianValue;
+  // if (pHSenseIterations % 2 == 0)
+  // {
+  //   medianValue = (sortedBuffer[pHSenseIterations / 2 - 1] + sortedBuffer[pHSenseIterations / 2]) / 2.0f;
+  // }
+  // else
+  // {
+  //   medianValue = sortedBuffer[pHSenseIterations / 2];
+  // }
+  // for (int i = 0; i < pHSenseIterations; i++)
+  //   {
+  //     Serial.print(sortedBuffer[i]);
+  //     Serial.print( " ");
+  //   }
+  // Serial.println("");
+  // Serial.print("Median Value: ");
+  // Serial.println(medianValue);
+
+  // probeVoltage = medianValue;
   // Build pH calibration code
-  double slopePH = ((7.0 - 4.01) / (neutralVoltage * 2 - acidVoltage * 2) + (7 - 10.0) / (neutralVoltage * 2 - baseVoltage * 2)) / 2;
-  double interceptPH = 7.0 - slopePH * (neutralVoltage * 2);
-  double compensatedSlope = slopePH * ((temperatureC + 273.15) / (25.0 + 273.15));
-  double pHValue = compensatedSlope * voltage + interceptPH;
-  Serial.print("slope:");
-  Serial.print(slopePH);
-  Serial.print(",intercept:");
-  Serial.println(interceptPH);
-  float phValue = slopePH*(probeVoltage)+interceptPH;  //y = k*x + b
-  Serial.println(phValue);*/
+  // double slopePH = ((7.0 - 4.01) / (neutralVoltage * 1.912 - acidVoltage * 1.912) + (7 - 10.0) / (neutralVoltage * 1.912 - baseVoltage * 1.912)) / 2;
+  // double interceptPH = 7.0 - slopePH * (factoryNeutralVoltage);
+  // double compensatedSlope = slopePH * ((temperatureC + 273.15) / (25.0 + 273.15));
+  // double pHValue = compensatedSlope * probeVoltage + interceptPH; //y = k*x + b
+  // double pHValue = slopePH * probeVoltage + interceptPH; //y = k*x + b
+  // Serial.print("slope:");
+  // Serial.print(slopePH,12);
+  // Serial.print(",intercept:");
+  // Serial.println(interceptPH,12);
+  // Serial.println(pHValue);
 	
 	Serial.println("****************BEGIN TDS**********************");
   // BEGIN TDS
   // Build Tds Calibration code
-  voltage = adc_tds.getResult_V(); // 10kOhm resistor present
-  probeVoltage = voltage * 3.058; // multiply by 10kOhm factor
-  Serial.print("Voltage [V], ADS1115 No 2: ");
-  // Serial.println(voltage);
-  // Serial.println("Converted to Voltage [V], ADS1115 TDS: ");
-  Serial.println(probeVoltage,12);
-  float kCoefficient = 0.019;
-  float rawEC = (133.42 * probeVoltage * probeVoltage * probeVoltage - 255.86 * probeVoltage * probeVoltage + 857.39 * probeVoltage);
-  Serial.print("TDS before Temp Correction and fitting function: ");
-  Serial.println(rawEC * 0.5);
-  float tempCorrection = 1.0 + kCoefficient * (temperatureC - referenceTemp);
-  float compensatedEC = rawEC / tempCorrection;
-  float rawTds = compensatedEC * 0.5;
-  Serial.print("TDS after Temp Correction and before fitting function: ");
-  Serial.println(rawTds);
-  float slopeTDS = (706.5 - 5) / (measuredConductivityStandard - measuredDeionizedWater);
-  float interceptTDS = 0 - slopeTDS * measuredDeionizedWater;
-  float correctedTds = slopeTDS * rawTds + interceptTDS;
-  Serial.print("slope: ");
-  Serial.println(slopeTDS);
-  Serial.print("intercept:");
-  Serial.println(interceptTDS);
-  // Serial.print("rawTds: ");
+  // voltage = adc_tds.getResult_V(); // 10kOhm resistor present
+  // probeVoltage = voltage * 3.058; // multiply by 10kOhm factor
+  // Serial.print("Voltage [V], ADS1115 No 2: ");
+  // Serial.println(probeVoltage,12);
+  
+  // analogBuffer[analogBufferIndex] = probeVoltage;
+  // analogBufferIndex = (analogBufferIndex + 1) % pHSenseIterations;
+  // float sortedBuffer[tdsSenseIterations];
+  // std::copy(analogBuffer, analogBuffer + tdsSenseIterations, sortedBuffer);
+  // std::sort(sortedBuffer, sortedBuffer + tdsSenseIterations);
+  // float medianValue;
+  // if (tdsSenseIterations % 2 == 0)
+  // {
+  //   medianValue = (sortedBuffer[tdsSenseIterations / 2 - 1] + sortedBuffer[tdsSenseIterations / 2]) / 2.0f;
+  // }
+  // else
+  // {
+  //   medianValue = sortedBuffer[pHSenseIterations / 2];
+  // }
+  // for (int i = 0; i < tdsSenseIterations; i++)
+  //   {
+  //     Serial.print(sortedBuffer[i]);
+  //     Serial.print( " ");
+  //   }
+  // Serial.println("");
+  // Serial.print("Median Value: ");
+  // Serial.println(medianValue, 12);
+  // probeVoltage = medianValue;
+
+  // float kCoefficient = 0.019;
+  // float rawEC = (133.42 * probeVoltage * probeVoltage * probeVoltage - 255.86 * probeVoltage * probeVoltage + 857.39 * probeVoltage);
+  // Serial.print("TDS before Temp Correction and fitting function: ");
+  // Serial.println(rawEC * 0.5);
+  // float tempCorrection = 1.0 + kCoefficient * (temperatureC - referenceTemp);
+  // float compensatedEC = rawEC / tempCorrection;
+  // float rawTds = compensatedEC * 0.5;
+  // Serial.print("TDS after Temp Correction and before fitting function: ");
   // Serial.println(rawTds);
-  Serial.print("After Temp Correction and fitting function: correctedTds = ");
-  Serial.println(correctedTds);
+  // float slopeTDS = (706.5 - 5) / (measuredConductivityStandard - measuredDeionizedWater);
+  // float interceptTDS = 0 - slopeTDS * measuredDeionizedWater;
+  // float correctedTds = slopeTDS * rawTds + interceptTDS; //y = k*x + b
+  // Serial.print("slope: ");
+  // Serial.println(slopeTDS);
+  // Serial.print("intercept:");
+  // Serial.println(interceptTDS);
+  // Serial.print("After Temp Correction and fitting function: correctedTds = ");
+  // Serial.println(correctedTds);
  
   Serial.println("****************************");  
   

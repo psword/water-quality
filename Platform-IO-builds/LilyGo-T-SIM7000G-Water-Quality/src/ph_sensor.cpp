@@ -77,7 +77,7 @@ void pHSensor::init()
 void pHSensor::analogReadAction()
 {
     float voltage = adcPH.getResult_V();
-    probeVoltage = voltage * 2;
+    probeVoltage = voltage * resistorFactor; // Compensate for 10kOhm resistor
 
     // Check for NaN or infinite values before storing
     if (!isnan(probeVoltage) && !isinf(probeVoltage))
@@ -147,19 +147,19 @@ float pHSensor::adjustpH(float voltage, float temperature)
         return NAN;
     }
 
-    if (neutralVoltage * 2 == acidVoltage * 2)
+    if (neutralVoltage * resistorFactor == acidVoltage * resistorFactor)
     {
         DEBUG_PRINTLN("ERROR: Division by zero in slope calculation (neutral - acid).");
         return NAN;
     }
-    if (neutralVoltage * 2 == baseVoltage * 2)
+    if (neutralVoltage * resistorFactor == baseVoltage * resistorFactor)
     {
         DEBUG_PRINTLN("ERROR: Division by zero in slope calculation (neutral - base).");
         return NAN;
     }
 
-    double slope = ((7.0 - 4.01) / (neutralVoltage * 2 - acidVoltage * 2) +
-                    (7 - 10.0) / (neutralVoltage * 2 - baseVoltage * 2)) /
+    double slope = ((7.0 - 4.01) / (neutralVoltage * resistorFactor - acidVoltage * resistorFactor) +
+                    (7 - 10.0) / (neutralVoltage * resistorFactor - baseVoltage * resistorFactor)) /
                    2;
 
     if (isnan(slope) || isinf(slope))
@@ -168,7 +168,7 @@ float pHSensor::adjustpH(float voltage, float temperature)
         return NAN;
     }
 
-    double intercept = 7.0 - slope * (neutralVoltage * 2);
+    double intercept = 7.0 - slope * (1.50);
 
     if (isnan(intercept) || isinf(intercept))
     {

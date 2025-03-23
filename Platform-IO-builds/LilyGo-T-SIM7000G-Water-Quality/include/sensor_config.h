@@ -40,6 +40,7 @@ static constexpr int PWR_PIN = 4;        // Power pin for SIM7000G
 extern float finalTemp;               // Global variable to store the final temperature value (write to SD)
 extern float finalTds;                // Global variable to store the final TDS value (write to SD)
 extern float rawTds;                  // Global variable to store the raw TDS value (write to SD)
+extern float voltageTds;              // Global variable to store the voltage value for TDS sensor (write to SD)
 extern float finalpH;                 // Global variable to store the final pH value (write to SD)
 extern float voltagePh;               // Global variable to store the voltage value for pH sensor
 extern float adjustedTemp;            // Global variable to store the adjusted temperature value
@@ -51,6 +52,6 @@ extern const unsigned long readDelay; // Global constant for the delay between s
 #define READING_DURATION 4000                        // Duration in milliseconds for sensor sampling
 static const unsigned long uS_TO_S_FACTOR = 1000000; // Conversion factor from microseconds to seconds
 static const int S_TO_MIN_FACTOR = 60;               // Conversion factor from seconds to minutes
-static const int TIME_TO_SLEEP = 6;                 // Duration in minutes for deep sleep between readings
+static const int TIME_TO_SLEEP = 360;                 // Duration in minutes for deep sleep between readings
 
 #endif // SENSOR_CONFIG

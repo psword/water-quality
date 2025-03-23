@@ -45,7 +45,7 @@ const char *filename = "/logs/sensor_log.txt";                                  
 bool codeExecuted = false;                                                        // Flag to track if code has executed previously
 bool dataLogged = false;                                                          // Flag to track if data has been logged
 RTC_DATA_ATTR u_int32_t bootCounter = 0;                                          // Counter to track number of boots
-static const unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR; // Sleep duration in microseconds
+static const uint64_t sleep_PARAMETER = (uint64_t)TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR; // Sleep duration in microseconds
 
 // Instantiate sensor objects
 // Temperature Sensor: Specify OneWire PIN and the number of samples in the buffer
@@ -114,10 +114,10 @@ void logDataWithTimestamp(fs::FS &fs, String filename, uRTCLib rtc)
     rtc.refresh();
 
     // Time Format: YY/MM/DD Day HH:MM:SS
-    sprintf(logEntry, "%02d/%02d/%02d %s %02d:%02d:%02d; finalTemp: %.2f; finalTDS: %.2f; rawTDS: %.2f; finalpH: %.2f; voltagePh: %.2f\n",
+    sprintf(logEntry, "%02d/%02d/%02d %s %02d:%02d:%02d; finalTemp: %.2f; finalTDS: %.2f; rawTDS: %.2f; voltageTDS: %.2f; finalpH: %.2f; voltagePh: %.2f\n",
             rtc.year(), rtc.month(), rtc.day(),
             daysOfTheWeek[rtc.dayOfWeek() - 1], // Adjust day index (1-7 → 0-6)
-            rtc.hour(), rtc.minute(), rtc.second(), finalTemp, finalTds, rawTds, finalpH, voltagePh);
+            rtc.hour(), rtc.minute(), rtc.second(), finalTemp, finalTds, rawTds, voltageTds, finalpH, voltagePh);
 
     // Write the formatted log entry to the file
     logData(fs, filename, logEntry);
@@ -201,6 +201,7 @@ void sendMQTT()
     doc["Temp"] = finalTemp;
     doc["TDS"] = finalTds;
     doc["rawTDS"] = rawTds;
+    doc["voltageTDS"] = voltageTds;
     doc["pH"] = finalpH;
     doc["voltagePh"] = voltagePh;
     doc["bootCounter"] = bootCounter;
@@ -243,6 +244,7 @@ void setup()
     DEBUG_PRINTLN("Initializing ESP32 Sensor Monitoring System...");
 
     esp_sleep_enable_timer_wakeup(sleep_PARAMETER);
+    DEBUG_PRINTF("sleep_PARAMETER: %llu\n", sleep_PARAMETER);
 
     // Configure GPIOs
     pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
@@ -413,6 +415,7 @@ void loop()
             DEBUG_PRINT("Cycle Time (seconds): ");
             DEBUG_PRINTLN(millis() / 1000);
             DEBUG_PRINTLN("Entering deep sleep...");
+            DEBUG_PRINTF("Sleep duration: %llu µs\n", sleep_PARAMETER);
             DEBUG_FLUSH();
             esp_deep_sleep_start();
         }

@@ -19,11 +19,11 @@ private:
     int analogBufferIndex; // Index for circular buffer
     float averageVoltage;  // Store the average voltage
 
-    float acidVoltage = 1.021501;    // buffer solution 4.01 at 25C
-    float neutralVoltage = .7854393; // buffer solution 7.0 at 25C
-    float baseVoltage = .5428138;    // buffer solution 10.0 at 25C
+    float acidVoltage = 1.02094;    // buffer solution 4.01 at 25C
+    float neutralVoltage = .78412; // buffer solution 7.0 at 25C
+    float baseVoltage = .552;    // buffer solution 10.0 at 25C
     float probeVoltage;              // voltage from probe
-    float resistorFactor = 1.912;    // resistor factor for temperature compensation
+    float resistorFactor = 2.00;    // resistor factor for temperature compensation
 
 public:
     // Constructor for ph sensor.

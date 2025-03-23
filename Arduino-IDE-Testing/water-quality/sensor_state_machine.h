@@ -18,9 +18,10 @@ enum SensorState
 };
 
 template <typename SensorType>
-class SensorStateMachine {
+class SensorStateMachine
+{
 public:
-    SensorStateMachine(SensorType& sensor, int powerPin);
+    SensorStateMachine(SensorType &sensor, int powerPin);
     void start();
     void operate();
     bool isOff() const; // Check if the state machine is off
@@ -30,7 +31,7 @@ private:
     void read();
     void shutdown();
 
-    SensorType& sensor_;
+    SensorType &sensor_;
     SensorState state_;
     unsigned long stateStartTime_;
     int powerPin_;

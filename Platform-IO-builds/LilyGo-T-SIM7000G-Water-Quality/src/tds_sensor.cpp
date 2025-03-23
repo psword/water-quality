@@ -11,6 +11,7 @@
 ADS1115_WE adcTDS(I2C_ADDRESS_TDS);
 
 float rawTds = 0.0; // Raw TDS value
+float voltageTds = 0.0; // Voltage for TDS sensor
 
 // Constructor for TdsSensor
 TdsSensor::TdsSensor(float kCoeff, float refTemp, ADS1115_MUX inputMux, int iterations)
@@ -69,7 +70,7 @@ void TdsSensor::init()
 void TdsSensor::analogReadAction()
 {
     double voltage = adcTDS.getResult_V();
-    double probeVoltage = voltage * 3.058; // Adjust for 10kOhm resistor
+    double probeVoltage = voltage * 3.33457692; // Adjust for 10kOhm resistor
 
     // Check for NaN or infinite values before storing
     if (!isnan(probeVoltage) && !isinf(probeVoltage))
@@ -140,6 +141,7 @@ float TdsSensor::adjustTds(float voltage, float temperature)
         return NAN;
     }
 
+    voltageTds = voltage; // Store the voltage for logging
     float rawEC = (133.42 * voltage * voltage * voltage - 255.86 * voltage * voltage + 857.39 * voltage);
     float tempCorrection = 1.0 + kCoefficient * (temperature - referenceTemp);
     float compensatedEC = rawEC / tempCorrection;

@@ -164,7 +164,7 @@ void loop() {
   float rawTds = compensatedEC * 0.5;
   Serial.print("TDS after Temp Correction and before fitting function: ");
   Serial.println(rawTds);
-  float slopeTDS = (706.5 - 5) / (measuredConductivityStandard - measuredDeionizedWater);
+  float slopeTDS = (706.5 - 2.5) / (measuredConductivityStandard - measuredDeionizedWater);
   float interceptTDS = 0 - slopeTDS * measuredDeionizedWater;
   float correctedTds = slopeTDS * rawTds + interceptTDS; //y = k*x + b
   Serial.print("slope: ");

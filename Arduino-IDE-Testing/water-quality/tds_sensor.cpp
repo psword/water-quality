@@ -147,7 +147,7 @@ float TdsSensor::adjustTds(float voltage, float temperature)
     float compensatedEC = rawEC / tempCorrection;
     rawTds = compensatedEC * 0.5;
 
-    float slope = (706.5 - 5) / (measuredConductivityStandard - measuredDeionizedWater);
+    float slope = (706.5 - 2.5) / (measuredConductivityStandard - measuredDeionizedWater);
     float intercept = 0 - slope * measuredDeionizedWater;
     float correctedTds = slope * rawTds + intercept;
 

@@ -45,16 +45,16 @@ const char *filename = "/logs/sensor_log.txt";                                  
 bool codeExecuted = false;                                                        // Flag to track if code has executed previously
 bool dataLogged = false;                                                          // Flag to track if data has been logged
 RTC_DATA_ATTR u_int32_t bootCounter = 0;                                          // Counter to track number of boots
-static const unsigned long sleep_PARAMETER = TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR; // Sleep duration in microseconds
+static const uint64_t sleep_PARAMETER = (uint64_t)TIME_TO_SLEEP * S_TO_MIN_FACTOR * uS_TO_S_FACTOR; // Sleep duration in microseconds
 
 // Instantiate sensor objects
 // Temperature Sensor: Specify OneWire PIN and the number of samples in the buffer
 TemperatureSensor tempSensorInstance(ONE_WIRE_BUS);
 
-// TDS Sensor: Specify kCoefficient, reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
+// TDS Sensor: Specify kCoefficient, reference temperature, ADS1115 MUX channel, and buffer size
 TdsSensor tdsSensorInstance(0.019, 25.0, TDS_SENSOR_MUX, 10);
 
-// pH Sensor: reference temperature, ADC resolution, ADS1115 MUX channel, and buffer size
+// pH Sensor: ADS1115 MUX channel, and buffer size
 pHSensor pHSensorInstance(PH_SENSOR_MUX, 10);
 
 // Create state machine instances for each sensor
@@ -114,10 +114,10 @@ void logDataWithTimestamp(fs::FS &fs, String filename, uRTCLib rtc)
     rtc.refresh();
 
     // Time Format: YY/MM/DD Day HH:MM:SS
-    sprintf(logEntry, "%02d/%02d/%02d %s %02d:%02d:%02d; Temp: %.2f; TDS: %.2f; pH: %.2f\n",
+    sprintf(logEntry, "%02d/%02d/%02d %s %02d:%02d:%02d; finalTemp: %.2f; finalTDS: %.2f; rawTDS: %.2f; voltageTDS: %.2f; finalpH: %.2f; voltagePh: %.2f\n",
             rtc.year(), rtc.month(), rtc.day(),
             daysOfTheWeek[rtc.dayOfWeek() - 1], // Adjust day index (1-7 → 0-6)
-            rtc.hour(), rtc.minute(), rtc.second(), finalTemp, finalTDS, finalpH);
+            rtc.hour(), rtc.minute(), rtc.second(), finalTemp, finalTds, rawTds, voltageTds, finalpH, voltagePh);
 
     // Write the formatted log entry to the file
     logData(fs, filename, logEntry);
@@ -199,8 +199,11 @@ void sendMQTT()
     doc["Device"] = "LilyGo-T-SIM7000G";
     doc["Timestamp"] = rtcVerify(rtc);
     doc["Temp"] = finalTemp;
-    doc["TDS"] = finalTDS;
+    doc["TDS"] = finalTds;
+    doc["rawTDS"] = rawTds;
+    doc["voltageTDS"] = voltageTds;
     doc["pH"] = finalpH;
+    doc["voltagePh"] = voltagePh;
     doc["bootCounter"] = bootCounter;
     doc["cycleTime"] = millis() / 1000 + 7; // Add 7 seconds to account for delays
 
@@ -241,6 +244,7 @@ void setup()
     DEBUG_PRINTLN("Initializing ESP32 Sensor Monitoring System...");
 
     esp_sleep_enable_timer_wakeup(sleep_PARAMETER);
+    DEBUG_PRINTF("sleep_PARAMETER: %llu\n", sleep_PARAMETER);
 
     // Configure GPIOs
     pinMode(TEMP_SENSOR_POWER_PIN, OUTPUT);
@@ -335,12 +339,12 @@ void loop()
             logDataWithTimestamp(SD, filename, rtc);
             DEBUG_PRINTLN("========SD Write.=======");
 
-            if (bootCounter % 2 == 0)
+            if (bootCounter % 1 == 0)
             {
                 DEBUG_PRINTLN("========GSM Print.=======");
                 // Initialize Modem
                 Serial1.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
-                DEBUG_PRINTLN("Wait for modem...setting GSM modul baud rate to 9600");
+                DEBUG_PRINTLN("Wait for modem...setting GSM module baud rate to 9600");
                 Serial1.begin(9600);
                 delay(6000);
                 modemPowerOn();
@@ -411,6 +415,7 @@ void loop()
             DEBUG_PRINT("Cycle Time (seconds): ");
             DEBUG_PRINTLN(millis() / 1000);
             DEBUG_PRINTLN("Entering deep sleep...");
+            DEBUG_PRINTF("Sleep duration: %llu µs\n", sleep_PARAMETER);
             DEBUG_FLUSH();
             esp_deep_sleep_start();
         }

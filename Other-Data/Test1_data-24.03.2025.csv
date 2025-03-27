@@ -1,0 +1,17 @@
+date(dd.mm.yy),time(24hr),jar,initial_weight(water),final_weight(water),water_replaced,jar_weight,parameter,liquid_type
+24.03.25,00:00,jar_1,0,100.6,0,208.7,tds,akkuvesi
+24.03.25,00:00,jar_2,0,100.6,0,208.1,ph,akkuvesi
+24.03.25,08:30,jar_1,98.5,99.1,26.0,208.7,tds,akkuvesi
+24.03.25,08:30,jar_2,99.3,100.1,26.4,208.1,ph, akkuvesi
+24.03.25,20:00,jar_1,96.9,99.1,26.0,208.7,tds,akkuvesi
+24.03.25,20:00,jar_2,97.7,99.2,26.5,208.1,ph,akkuvesi
+25.03.25,08:10:00,jar_2,97.4,99.2,31.8,208.1,ph,akkuvesi
+25.03.25,08:10:00,jar_1,96.4,102,4,28,2,208.7,tds,akkuvesi
+25.03.25,20:00:00,jar_2,97.1,98.1,25.1,208.1,ph,akkuvesi
+25.03.25,20:00:00,jar_1,100.2,100.4,26.0,208.7,tds,akkuvesi
+26.03.25,20:16:00,jar_2,95.5,96.6,25.5,208.1,ph,akkuvesi
+26.03.25,20:16:00,jar_1,98,97.2,22.6,208.7,tds,akkuvesi
+26.03.25,23:55:00,jar_2,94,97.6,32.4,208.1,ph,akkuvesi
+27.03.25,00:02:00,jar_1,94.5,115.4,48.6,208.7,tds,akkuvesi
+27.03.25,08:26:00,jar_2,95.5,90.1,20.5,208.1,ph,akkuvesi
+27.03.25,08:26:00,jar_1,113.7,110,8.8,208.7,tds,akkuvesi

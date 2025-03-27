@@ -6,9 +6,7 @@
 #include <Arduino.h>
 #include <cmath> // For isnan() and isinf()
 
-/**
- * Constructor for TemperatureSensor, initializes the OneWire bus and DallasTemperature sensor.
- */
+// Constructor for TemperatureSensor, initializes the OneWire bus and DallasTemperature sensor.
 TemperatureSensor::TemperatureSensor(int oneWirePin, int iterations)
     : oneWire(oneWirePin), sensors(&oneWire), tempSenseIterations(iterations), analogBufferIndex(0)
 {
@@ -28,18 +26,14 @@ TemperatureSensor::TemperatureSensor(int oneWirePin, int iterations)
     }
 }
 
-/**
- * Destructor for TemperatureSensor, deallocates memory for the analog buffer.
- */
+// Destructor for TemperatureSensor, deallocates memory for the analog buffer.
 TemperatureSensor::~TemperatureSensor()
 {
     // Deallocate memory for the analog buffer
     delete[] analogBuffer;
 }
 
-/**
- * Initializes the DallasTemperature sensor.
- */
+// Initializes the DallasTemperature sensor.
 void TemperatureSensor::init()
 {
     DEBUG_PRINTLN("Initializing temperature sensor...");
@@ -47,9 +41,7 @@ void TemperatureSensor::init()
     DEBUG_PRINTLN("Temperature sensor setup complete.");
 }
 
-/**
- * Reads temperature data from the sensor and updates the buffer.
- */
+// Reads temperature data from the sensor and updates the buffer.
 void TemperatureSensor::analogReadAction()
 {
     sensors.requestTemperatures();
@@ -74,13 +66,13 @@ void TemperatureSensor::analogReadAction()
     }
 }
 
-/**
- * Computes the median temperature from the buffer.
- * @return The median temperature.
- */
+// Computes the median temperature from the buffer.
 float TemperatureSensor::computeMedian()
 {
     float sortedBuffer[tempSenseIterations]; // Temporary array for sorting
+    std::copy(analogBuffer, analogBuffer + tempSenseIterations, sortedBuffer);
+    std::sort(sortedBuffer, sortedBuffer + tempSenseIterations);
+
     DEBUG_PRINTLN("Sorted temperature buffer:");
     for (int i = 0; i < tempSenseIterations; i++)
     {
@@ -94,17 +86,6 @@ float TemperatureSensor::computeMedian()
             DEBUG_PRINT(sortedBuffer[i]);
             DEBUG_PRINT(" ");
         }
-    }
-    DEBUG_PRINTLN("");
-
-    std::copy(analogBuffer, analogBuffer + tempSenseIterations, sortedBuffer);
-    std::sort(sortedBuffer, sortedBuffer + tempSenseIterations);
-
-    DEBUG_PRINTLN("Sorted temperature buffer:");
-    for (int i = 0; i < tempSenseIterations; i++)
-    {
-        DEBUG_PRINT(sortedBuffer[i]);
-        DEBUG_PRINT(" ");
     }
     DEBUG_PRINTLN("");
 
@@ -123,10 +104,7 @@ float TemperatureSensor::computeMedian()
     return medianValue;
 }
 
-/**
- * Reads and adjusts the temperature data.
- * @return The adjusted temperature.
- */
+// Reads and adjusts the temperature data.
 float TemperatureSensor::read(float temperature)
 {
     DEBUG_PRINTLN("Starting temperature reading...");
@@ -140,17 +118,13 @@ float TemperatureSensor::read(float temperature)
     return medianTemperature;
 }
 
-/**
- * Shuts down the sensor, no operation.
- */
+// Shuts down the sensor, no operation.
 void TemperatureSensor::shutdown()
 {
     // No shutdown code needed for this sensor
 }
 
-/**
- * Stabilizes the sensor with a timer, possible for future operation.
- */
+// Stabilizes the sensor with a timer, possible for future operation.
 void TemperatureSensor::stabilize()
 {
     // Stabilization code if necessary

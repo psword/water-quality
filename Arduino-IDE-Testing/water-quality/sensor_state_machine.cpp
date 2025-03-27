@@ -7,7 +7,7 @@
 
 float adjustedTemp = 0;              // Variable to store temperature
 float finalTemp = 0.0;               // Final temperature value
-float finalTDS = 0.0;                // Final TDS value
+float finalTds = 0.0;                // Final TDS value
 float finalpH = 0.0;                 // Final pH value
 const unsigned long readDelay = 100; // Delay between reads (milliseconds)
 
@@ -126,7 +126,7 @@ template <>
 void SensorStateMachine<TdsSensor>::read()
 {
     float sensorValue = sensor_.read(adjustedTemp);
-    finalTDS = sensorValue;
+    finalTds = sensorValue;
     DEBUG_PRINT("Sensor Read Value: "); DEBUG_PRINTLN(sensorValue);
 }
 

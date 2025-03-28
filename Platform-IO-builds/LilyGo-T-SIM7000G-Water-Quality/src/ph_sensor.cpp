@@ -168,7 +168,7 @@ float pHSensor::adjustpH(float voltage, float temperature)
         return NAN;
     }
 
-    double intercept = 7.0 - slope * (1.50);
+    double intercept = 7.0 - slope * (neutralVoltage);
 
     if (isnan(intercept) || isinf(intercept))
     {

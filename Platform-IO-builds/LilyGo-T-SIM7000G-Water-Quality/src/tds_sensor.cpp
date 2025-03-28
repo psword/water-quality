@@ -168,6 +168,12 @@ float TdsSensor::adjustTds(float voltage, float temperature)
     
     rawTds = compensatedEC * 0.5;
 
+    if (measuredConductivityStandard == measuredDeionizedWater)
+    {
+        DEBUG_PRINTLN("ERROR: Division by zero in slope calculation (conductivityStandard - diWater).");
+        return NAN;
+    }
+    
     float slope = (706.5 - 2.5) / (measuredConductivityStandard - measuredDeionizedWater);
 
     if (isnan(slope) || isinf(slope))

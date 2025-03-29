@@ -26,8 +26,8 @@
 
 // Modem Configuration
 #define TINY_GSM_MODEM_SIM7000 // Define the modem
-#define TINY_GSM_USE_GPRS true // Use GPRS for data connection
-#define GSM_PIN ""             // SIM card PIN (leave empty if not defined)
+// #define TINY_GSM_USE_GPRS true // Use GPRS for data connection
+#define SIM_PIN ""             // SIM card PIN (leave empty if not defined)
 #include <TinyGsmClient.h>     // TinyGSM Library for GSM communication
 #include <PubSubClient.h>      // MQTT Library for ESP32
 #include <ArduinoJson.h>       // JSON Library for ESP32
@@ -109,7 +109,7 @@ void createDir(fs::FS &fs, const char *path)
 void logDataWithTimestamp(fs::FS &fs, String filename, uRTCLib rtc)
 {
 
-    char logEntry[128]; // Buffer to store formatted log string
+    char logEntry[256]; // Buffer to store formatted log string
 
     rtc.refresh();
 
@@ -118,7 +118,7 @@ void logDataWithTimestamp(fs::FS &fs, String filename, uRTCLib rtc)
             rtc.year(), rtc.month(), rtc.day(),
             daysOfTheWeek[rtc.dayOfWeek() - 1], // Adjust day index (1-7 → 0-6)
             rtc.hour(), rtc.minute(), rtc.second(), finalTemp, finalTds, rawTds, voltageTds, finalpH, voltagePh);
-
+    DEBUG_PRINTF("Buffer Length: %d\n", strlen(logEntry)); // Check if exceeding 128 bytes
     // Write the formatted log entry to the file
     logData(fs, filename, logEntry);
 }
@@ -338,9 +338,12 @@ void loop()
             DEBUG_PRINTLN("========SD Card.=======");
             logDataWithTimestamp(SD, filename, rtc);
             DEBUG_PRINTLN("========SD Write.=======");
-
+            delay(500);
             if (bootCounter % 1 == 0)
             {
+                String res;
+                Serial1.flush();
+                delay(100);
                 DEBUG_PRINTLN("========GSM Print.=======");
                 // Initialize Modem
                 Serial1.begin(UART_BAUD, SERIAL_8N1, PIN_RX, PIN_TX);
@@ -350,10 +353,37 @@ void loop()
                 modemPowerOn();
 
                 // Unlock your SIM card with a PIN if needed
-                if (GSM_PIN && modem.getSimStatus() != 3)
+                if (SIM_PIN && modem.getSimStatus() != 3)
                 {
-                    modem.simUnlock(GSM_PIN);
+                    modem.simUnlock(SIM_PIN);
                 }
+
+                DEBUG_PRINTLN("========SIMCOMATI======");
+                modem.sendAT("+SIMCOMATI");
+                modem.waitResponse(1000L, res);
+                res.replace(AT_NL "OK" AT_NL, "");
+                DEBUG_PRINTLN(res);
+                res = "";
+                DEBUG_PRINTLN("=======================");
+                
+                DEBUG_PRINTLN("=====Preferred mode selection=====");
+                modem.sendAT("+CNMP?");
+                if (modem.waitResponse(1000L, res) == 1) {
+                  res.replace(AT_NL "OK" AT_NL, "");
+                  DEBUG_PRINTLN(res);
+                }
+                res = "";
+                DEBUG_PRINTLN("=======================");
+              
+              
+                DEBUG_PRINTLN("=====Preferred selection between CAT-M and NB-IoT=====");
+                modem.sendAT("+CMNB?");
+                if (modem.waitResponse(1000L, res) == 1) {
+                  res.replace(AT_NL "OK" AT_NL, "");
+                  DEBUG_PRINTLN(res);
+                }
+                res = "";
+                DEBUG_PRINTLN("=======================");
 
                 DEBUG_PRINT("Waiting for network...");
                 while (!modem.waitForNetwork() && counterNetworkRetries < MAX_RETRIES)
@@ -365,7 +395,36 @@ void loop()
                     return;
                 }
                 DEBUG_PRINTLN(" success");
-
+                
+                for (int i = 0; i <= 4; i++) {
+                    uint8_t network[] = {
+                        2,  /*Automatic*/
+                        13, /*GSM only*/
+                        38, /*LTE only*/
+                        51  /*GSM and LTE only*/
+                    };
+                    DEBUG_PRINTF("Try %d method\n", network[i]);
+                    modem.setNetworkMode(network[i]);
+                    delay(3000);
+                    bool isConnected = false;
+                    int tryCount = 60;
+                    while (tryCount--) {
+                      int16_t signal =  modem.getSignalQuality();
+                      DEBUG_PRINT("Signal: ");
+                      DEBUG_PRINT(signal);
+                      DEBUG_PRINTLN(" ");
+                      DEBUG_PRINT("isNetworkConnected: ");
+                      isConnected = modem.isNetworkConnected();
+                      DEBUG_PRINTLN( isConnected ? "CONNECT" : "NO CONNECT");
+                      if (isConnected) {
+                        break;
+                        }
+                    }
+                    if (isConnected) {
+                        break;
+                    }
+                    delay(1000);  
+                }
                 if (modem.isNetworkConnected())
                 {
                     DEBUG_PRINTLN("Network connected");
@@ -396,18 +455,21 @@ void loop()
                 }
                 DEBUG_PRINTLN("===========================");
 
-                // Disconnect GPRS
+                // Disconnect network
                 modemPowerOff();
                 DEBUG_PRINTLN("========GSM Print Finished.=======");
             }
             dataLogged = true; // Ensure logging only happens once
             DEBUG_PRINTLN("========Datalogging Print Finished.=======");
+        
         }
 
         // Delay for 3 seconds before sleeping (non-blocking)
         static unsigned long sleepDelayStart = 0;
         if (sleepDelayStart == 0)
+        {
             sleepDelayStart = millis();
+        }
 
         if (millis() - sleepDelayStart >= 3000)
         {
@@ -420,5 +482,5 @@ void loop()
             esp_deep_sleep_start();
         }
     }
-
-} // End of loop
+} 
+// End of loop

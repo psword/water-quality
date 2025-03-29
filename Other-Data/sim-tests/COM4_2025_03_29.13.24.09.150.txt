@@ -1,0 +1,1186 @@
+����������������������j
+Current State: 5
+State: SENSOR_SHUTDOWN - Shutting down sensor.
+Shutting down TemperatureSensor...
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+> Temperature Sensor done. Starting TDS Sensor... <
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:25
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 1
+State: SENSOR_INIT - Initializing sensor.
+Initializing sensor: Powering ON.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:25
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Stabilization in progress: 536
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:26
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Stabilization in progress: 1072
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:27
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Stabilization in progress: 1730
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:27
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Stabilization in progress: 2266
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:28
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Stabilization in progress: 2802
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:28
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Stabilization in progress: 3460
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:29
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Stabilization in progress: 3996
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:30
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing TDS sensor...
+ADS1115 initialized successfully.
+TDS sensor setup complete.
+Sensor initialized. Proceeding to read state.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:30
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:31
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 471
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04 
+Computed Median: 0.00
+Adjusting TDS with voltage: 0.00 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 0.00
+Raw TDS: 0.00
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: -5.88
+Final TDS Value: -5.88
+Sensor Read Value: -5.88
+Continuing sensor readings.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:31
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:32
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 1065
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.04 
+Computed Median: 0.00
+Adjusting TDS with voltage: 0.00 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 0.00
+Raw TDS: 0.00
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: -5.88
+Final TDS Value: -5.88
+Sensor Read Value: -5.88
+Continuing sensor readings.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:33
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:33
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 1536
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.04 0.04 
+Computed Median: 0.00
+Adjusting TDS with voltage: 0.00 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 0.00
+Raw TDS: 0.00
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: -5.88
+Final TDS Value: -5.88
+Sensor Read Value: -5.88
+Continuing sensor readings.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:34
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:35
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 2129
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.04 0.04 0.04 
+Computed Median: 0.00
+Adjusting TDS with voltage: 0.00 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 0.00
+Raw TDS: 0.00
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: -5.88
+Final TDS Value: -5.88
+Sensor Read Value: -5.88
+Continuing sensor readings.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:36
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:36
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 2600
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.04 0.04 0.04 0.04 0.04 
+Computed Median: 0.02
+Adjusting TDS with voltage: 0.02 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 16.36
+Raw TDS: 8.18
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: 2.83
+Final TDS Value: 2.83
+Sensor Read Value: 2.83
+Continuing sensor readings.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:37
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:38
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 3193
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.04 0.04 0.04 0.04 0.04 0.04 
+Computed Median: 0.04
+Adjusting TDS with voltage: 0.04 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 32.27
+Raw TDS: 16.14
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: 11.29
+Final TDS Value: 11.29
+Sensor Read Value: 11.29
+Continuing sensor readings.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:38
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:39
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 3664
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.00 0.04 0.04 0.04 0.04 0.04 0.04 0.04 
+Computed Median: 0.04
+Adjusting TDS with voltage: 0.04 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 32.56
+Raw TDS: 16.28
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: 11.44
+Final TDS Value: 11.44
+Sensor Read Value: 11.44
+Continuing sensor readings.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:40
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:40
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 4257
+Starting TDS reading...
+Raw ADC Voltage: 0.01
+Probe Voltage (adjusted): 0.04
+Sorted analog buffer:
+0.00 0.00 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 
+Computed Median: 0.04
+Adjusting TDS with voltage: 0.04 and temperature: 21.25
+Temperature Correction Factor: 0.93
+Compensated EC: 32.56
+Raw TDS: 16.28
+Calibration Adjustment:
+Slope: 1.06
+Intercept: -5.88
+Corrected TDS: 11.44
+Final TDS Value: 11.44
+Sensor Read Value: 11.44
+Reading duration exceeded. Transitioning to shutdown.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:41
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 5
+State: SENSOR_SHUTDOWN - Shutting down sensor.
+Shutting down TdsSensor...
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+> TDS Sensor done. Starting pH Sensor... <
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:42
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 1
+State: SENSOR_INIT - Initializing sensor.
+Initializing sensor: Powering ON.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:42
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing pH sensor...
+ADS1115 initialized successfully.
+pH sensor setup complete.
+Stabilization in progress: 658
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:43
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing pH sensor...
+ADS1115 initialized successfully.
+pH sensor setup complete.
+Stabilization in progress: 1194
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:44
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing pH sensor...
+ADS1115 initialized successfully.
+pH sensor setup complete.
+Stabilization in progress: 1852
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:44
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing pH sensor...
+ADS1115 initialized successfully.
+pH sensor setup complete.
+Stabilization in progress: 2388
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:45
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing pH sensor...
+ADS1115 initialized successfully.
+pH sensor setup complete.
+Stabilization in progress: 3046
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:45
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing pH sensor...
+ADS1115 initialized successfully.
+pH sensor setup complete.
+Stabilization in progress: 3582
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:46
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 2
+State: SENSOR_STABILIZE - Stabilizing sensor.
+Stabilizing sensor...
+Initializing pH sensor...
+ADS1115 initialized successfully.
+pH sensor setup complete.
+Sensor initialized. Proceeding to read state.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:46
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:47
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 471
+Starting pH reading...
+Raw ADC Voltage: 1.14
+Probe Voltage (adjusted): 2.28
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2.28 
+Computed Median: 0.00
+Adjusting pH with voltage: 0.00 and temperature: 21.25
+Final Calculated pH: 11.33
+Final pH Value: 11.33
+Sensor Read Value: 11.33
+Continuing sensor readings.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:48
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:48
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 1065
+Starting pH reading...
+Raw ADC Voltage: 1.13
+Probe Voltage (adjusted): 2.26
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 2.26 2.28 
+Computed Median: 0.00
+Adjusting pH with voltage: 0.00 and temperature: 21.25
+Final Calculated pH: 11.33
+Final pH Value: 11.33
+Sensor Read Value: 11.33
+Continuing sensor readings.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:49
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:50
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 1658
+Starting pH reading...
+Raw ADC Voltage: 1.14
+Probe Voltage (adjusted): 2.28
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 0.00 2.26 2.28 2.28 
+Computed Median: 0.00
+Adjusting pH with voltage: 0.00 and temperature: 21.25
+Final Calculated pH: 11.33
+Final pH Value: 11.33
+Sensor Read Value: 11.33
+Continuing sensor readings.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:51
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:51
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 2251
+Starting pH reading...
+Raw ADC Voltage: 1.05
+Probe Voltage (adjusted): 2.10
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 0.00 2.10 2.26 2.28 2.28 
+Computed Median: 0.00
+Adjusting pH with voltage: 0.00 and temperature: 21.25
+Final Calculated pH: 11.33
+Final pH Value: 11.33
+Sensor Read Value: 11.33
+Continuing sensor readings.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:52
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:52
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 2844
+Starting pH reading...
+Raw ADC Voltage: 1.16
+Probe Voltage (adjusted): 2.32
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 0.00 2.10 2.26 2.28 2.28 2.32 
+Computed Median: 1.05
+Adjusting pH with voltage: 1.05 and temperature: 21.25
+Final Calculated pH: 5.38
+Final pH Value: 5.38
+Sensor Read Value: 5.38
+Continuing sensor readings.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:53
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:54
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 3437
+Starting pH reading...
+Raw ADC Voltage: 1.16
+Probe Voltage (adjusted): 2.31
+Sorted analog buffer:
+0.00 0.00 0.00 0.00 2.10 2.26 2.28 2.28 2.31 2.32 
+Computed Median: 2.18
+Adjusting pH with voltage: 2.18 and temperature: 21.25
+Final Calculated pH: -1.01
+Final pH Value: -1.01
+Sensor Read Value: -1.01
+Continuing sensor readings.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:55
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 3
+State: SENSOR_READ - Starting read cycle.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:55
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 4
+State: SENSOR_WAIT - Waiting for sensor read delay.
+Total Read Time (ms): 4030
+Starting pH reading...
+Raw ADC Voltage: 1.11
+Probe Voltage (adjusted): 2.22
+Sorted analog buffer:
+0.00 0.00 0.00 2.10 2.22 2.26 2.28 2.28 2.31 2.32 
+Computed Median: 2.24
+Adjusting pH with voltage: 2.24 and temperature: 21.25
+Final Calculated pH: -1.36
+Final pH Value: -1.36
+Sensor Read Value: -1.36
+Reading duration exceeded. Transitioning to shutdown.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: NO
+========TimeStamp Print.=======
+25/03/29 Saturday 13:24:56
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 5
+State: SENSOR_SHUTDOWN - Shutting down sensor.
+Shutting down pHSensor...
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+> All sensors have finished. Writing data to SD Card. <
+========Datalogging Print.=======
+========SD Card.=======
+Buffer Length: 128
+Data Written: 25/03/29 Saturday 13:24:56; finalTemp: 21.25; finalTDS: 11.44; rawTDS: 16.28; voltageTDS: 0.04; finalpH: -1.36; voltagePh: 2.24
+
+========SD Write.=======
+========GSM Print.=======
+Wait for modem...setting GSM module baud rate to 9600
+========SIMCOMATI======
+AT+SIMCOMATI
+Revision:1529B08SIM7000G
+CSUB:V01
+APRev:1529B08SIM7000,V01
+QCN:MDM9206_TX3.0.SIM7000G_P1.03_20220415
+IMEI:869951038002329
+
+=======================
+=====Preferred mode selection=====
+AT+CNMP?
++CNMP: 13
+
+=======================
+=====Preferred selection between CAT-M and NB-IoT=====
+AT+CMNB?
++CMNB: 3
+
+=======================
+Waiting for network... success
+Try 2 method
+Signal: 29 
+isNetworkConnected: CONNECT
+Network connected
+GPRS disconnected! Attempting reconnection...
+GPRS reconnected
+Modem Name: SIMCOM_Ltd SIMCOM_SIM7000G
+========MQTT Print.=======
+Attempting MQTT connection...
+Connecting to backend.thinger.io success
+Publishing JSON:
+{"Device":"LilyGo-T-SIM7000G","Timestamp":"25/03/29 Saturday 13:24:56","Temp":21.25,"TDS":11.43814,"rawTDS":16.27833,"voltageTDS":0.035638,"pH":-1.357953,"voltagePh":2.24025,"bootCounter":1,"cycleTime":88}
+MQTT Connected!
+===========================
+========GSM Print Finished.=======
+========Datalogging Print Finished.=======
+========TimeStamp Print.=======
+25/03/29 Saturday 13:25:28
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+========TimeStamp Print.=======
+25/03/29 Saturday 13:25:29
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+========TimeStamp Print.=======
+25/03/29 Saturday 13:25:29
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+========TimeStamp Print.=======
+25/03/29 Saturday 13:25:30
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+========TimeStamp Print.=======
+25/03/29 Saturday 13:25:30
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+========TimeStamp Print.=======
+25/03/29 Saturday 13:25:31
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+========TimeStamp Print.=======
+25/03/29 Saturday 13:25:31
+===========================
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Current State: 0
+State: SENSOR_OFF - Waiting for activation.
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+Sensor isOff check: YES
+> Data logging completed. Entering deep sleep. <
+Cycle Time (seconds): 88
+Entering deep sleep...
+Sleep duration: 21600000000 µs

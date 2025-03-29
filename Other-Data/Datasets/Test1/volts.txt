@@ -1,0 +1,10 @@
+Beginnging Volts
+4.14V
+
+Ending Volts
+3.64V
+
+Hours of Operation:
+130 Hours
+
+#check number of reboots, etc.

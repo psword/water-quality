@@ -143,12 +143,53 @@ float TdsSensor::adjustTds(float voltage, float temperature)
 
     voltageTds = voltage; // Store the voltage for logging
     float rawEC = (133.42 * voltage * voltage * voltage - 255.86 * voltage * voltage + 857.39 * voltage);
+
+    if (isnan(rawEC) || isinf(rawEC))
+    {
+        DEBUG_PRINTLN("ERROR: rawEC is NaN or infinite!");
+        return NAN;
+    }
+    
     float tempCorrection = 1.0 + kCoefficient * (temperature - referenceTemp);
+
+    if (isnan(tempCorrection) || isinf(tempCorrection))
+    {
+        DEBUG_PRINTLN("ERROR: tempCorrection is NaN or infinite!");
+        return NAN;
+    }
+    
     float compensatedEC = rawEC / tempCorrection;
+
+    if (isnan(compensatedEC) || isinf(compensatedEC))
+    {
+        DEBUG_PRINTLN("ERROR: compensatedEC is NaN or infinite!");
+        return NAN;
+    }
+    
     rawTds = compensatedEC * 0.5;
 
+    if (measuredConductivityStandard == measuredDeionizedWater)
+    {
+        DEBUG_PRINTLN("ERROR: Division by zero in slope calculation (conductivityStandard - diWater).");
+        return NAN;
+    }
+    
     float slope = (706.5 - 2.5) / (measuredConductivityStandard - measuredDeionizedWater);
+
+    if (isnan(slope) || isinf(slope))
+    {
+        DEBUG_PRINTLN("ERROR: Slope is NaN or infinite!");
+        return NAN;
+    }
+    
     float intercept = 0 - slope * measuredDeionizedWater;
+
+    if (isnan(intercept) || isinf(intercept))
+    {
+        DEBUG_PRINTLN("ERROR: Intercept is NaN or infinite!");
+        return NAN;
+    }
+    
     float correctedTds = slope * rawTds + intercept;
 
     DEBUG_PRINT("Temperature Correction Factor: ");

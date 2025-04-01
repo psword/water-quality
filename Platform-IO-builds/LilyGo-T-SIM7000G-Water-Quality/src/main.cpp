@@ -69,7 +69,7 @@ SensorStateMachine<pHSensor> pHStateMachine(pHSensorInstance, PH_SENSOR_POWER_PI
 // to set January 13 2022 at 12:56 you would call:
 // example -> rtc.set(second, minute, hour, dayOfWeek, dayOfMonth, month, year)
 // OR rtc.set(0, 56, 12, 5, 13, 1, 22);
-// set day of week (1=Sunday, 7=Saturday)
+// set day of week (1=Monday, 7=Sunday)
 uRTCLib rtc(0x68);                    // RTC object (default I2C address)
 byte rtcModel = URTCLIB_MODEL_DS3231; // RTC model
 
@@ -262,7 +262,7 @@ void setup()
     rtc.refresh();
     rtcVerify(rtc);
     // Set the RTC time, comment out once set and reload the code
-    // rtc.set(0, 56, 12, 5, 13, 1, 22);
+    // rtc.set(0, 1, 18, 2, 1, 4, 25);
 
     intializeSDCard(SD_SCLK, SD_MISO, SD_MOSI, SD_CS); // Initialize SD Card
 

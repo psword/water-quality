@@ -17,12 +17,12 @@ DallasTemperature sensors(&oneWire);
 ADS1115_WE adc_ph = ADS1115_WE(I2C_ADDRESS_PH);
 ADS1115_WE adc_tds = ADS1115_WE(I2C_ADDRESS_TDS);
 
-float acidVoltage    = 1020.94;    //buffer solution 4.01 at 25C
-float neutralVoltage = 784.12;     //buffer solution 7.0 at 25C
-float baseVoltage    = 552.00;     //buffer solution 10.0 at 25C
+float acidVoltage    = 1043.00;    //buffer solution 4.01 at 25C
+float neutralVoltage = 788.91;     //buffer solution 7.0 at 25C
+float baseVoltage    = 561.75;     //buffer solution 10.0 at 25C
 float referenceTemp = 25.0; // reference temperature of 25 deg C
-float measuredConductivityStandard = 667.39; // Measured conductivity standard for calibration
-float measuredDeionizedWater = 5.52476;         // Measured deionized water for calibration
+float measuredConductivityStandard = 665.76; // Measured conductivity standard for calibration
+float measuredDeionizedWater = 16.23;         // Measured deionized water for calibration
 int iterations = 50;
 float *analogBuffer;   // Dynamic array for buffer, NOTE: there is no destructor for the buffer
 int analogBufferIndex; // Index for circular buffer
@@ -76,7 +76,7 @@ void loop() {
   
   
   // Serial.println("****************BEGIN PH**********************");
-  // BEGIN PH
+  // // BEGIN PH
   // voltage = adc_ph.getResult_mV(); // 10kOhm resistor present
   // probeVoltage = voltage*2;  // multiply by 10kOhm factor
   // Serial.println("Voltage [mV], ADS1115 PH: ");
@@ -105,7 +105,9 @@ void loop() {
   //   }
   // Serial.println("");
   // Serial.print("Median Value: ");
-  // Serial.println(medianValue);
+  // Serial.println(medianValue, 12);
+  // Serial.print("Median Value * 1/2: ");
+  // Serial.println(medianValue/2, 12);
 
   // probeVoltage = medianValue;
   // // Build pH calibration code
@@ -153,6 +155,8 @@ void loop() {
   Serial.println("");
   Serial.print("Median Value: ");
   Serial.println(medianValue, 12);
+  Serial.print("Median Value * 1/3.33457692: ");
+  Serial.println(medianValue/3.33457692, 12);
   probeVoltage = medianValue;
 
   float kCoefficient = 0.019;
@@ -176,5 +180,5 @@ void loop() {
  
   Serial.println("****************************");  
   
-  delay(100);
-}
+   delay(100);
+ }

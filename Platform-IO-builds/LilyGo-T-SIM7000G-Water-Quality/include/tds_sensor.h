@@ -17,8 +17,8 @@ private:
 
     float *analogBuffer;                         // Dynamic array for buffer
     int analogBufferIndex;                       // Index for the circular buffer
-    float measuredConductivityStandard = 667.390; // Measured conductivity standard for calibration
-    float measuredDeionizedWater = 5.52476;         // Measured deionized water for calibration
+    float measuredConductivityStandard = 665.76; // Measured conductivity standard for calibration
+    float measuredDeionizedWater = 16.23;         // Measured deionized water for calibration
     
 public:
     // Constructor for TdsSensor.

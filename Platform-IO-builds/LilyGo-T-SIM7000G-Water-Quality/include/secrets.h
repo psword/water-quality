@@ -2,7 +2,7 @@
 #define SECRETS
 
 // Define how we want to connect to the internet
-const char apn[] = "internet"; // APN (Access Point Name)
+const char apn[] = "prepaid.dna.fi"; // APN (Access Point Name)
 const char gprsUser[] = "";    // GPRS User
 const char gprsPass[] = "";    // GPRS Password
 

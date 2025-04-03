@@ -1,4 +1,4 @@
-Beginnging Volts
+Beginning Volts
 4.14V
 
 Ending Volts

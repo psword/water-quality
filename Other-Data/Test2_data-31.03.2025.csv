@@ -45,7 +45,8 @@ date(dd.mm.yy),time(24hr),jar,initial_weight(water),final_weight(water),water_re
 13.04.25,13:31:00,jar_2,60.7,60.7,14.3,244.0,ph,akkuvesi
 13.04.25,21:29:00,jar_1,50.9,57.6,18.7,218.5,tds,akkuvesi
 13.04.25,21:32:00,jar_2,58.3,67.0,19.3,244.0,ph,akkuvesi
-
+14.04.25,07:33:00,jar_1,55.7,58.1,11.8,218.5,tds,akkuvesi
+14.04.25,07:36:00,jar_2,64.7,67.6,14.1,244.0,ph,akkuvesi
 
 
 

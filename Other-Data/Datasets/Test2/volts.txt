@@ -1,2 +1,5 @@
 Beginning Volts
 4.18V
+
+Ending Volts
+3.63V

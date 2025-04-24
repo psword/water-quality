@@ -26,9 +26,13 @@ float referenceTemp = 25.0; // reference temperature of 25 deg C
 float measuredConductivityStandard = 0; // Measured conductivity standard for calibration
 float measuredDeionizedWater = 0;         // Measured deionized water for calibration
 int iterations = 50;
-float *analogBuffer;   // Dynamic array for buffer, NOTE: there is no destructor for the buffer
-int analogBufferIndex; // Index for circular buffer
-int analogBufferCount = 0; // Count of valid items in buffer
+float *analogBuffer_ph;
+float *analogBuffer_tds;
+int analogBufferIndex_ph = 0;
+int analogBufferIndex_tds = 0;
+int analogBufferCount_ph = 0;
+int analogBufferCount_tds = 0;
+
 
 void setup() {
   Wire.begin();
@@ -58,11 +62,13 @@ void setup() {
   sensors.begin();
 
   // Allocate memory for analog buffer
-  analogBuffer = new float[iterations];
-  for (int i = 0; i < iterations; i++)
-    {
-      analogBuffer[i] = 0.0;
-    }
+  analogBuffer_ph = new float[iterations];
+  analogBuffer_tds = new float[iterations];
+  for (int i = 0; i < iterations; i++) {
+    analogBuffer_ph[i] = 0.0;
+    analogBuffer_tds[i] = 0.0;
+  }
+
 }
 
 void loop() {
@@ -79,45 +85,32 @@ void loop() {
   
   
   //****************BEGIN PH**********************
-  voltage = adc_ph.getResult_mV(); // 10kOhm resistor present
-  probeVoltage = voltage*2;  // multiply by 10kOhm factor
-  // Serial.print("Voltage [mV], ADS1115 PH: ");
-  // Serial.print(voltage);
-  // Serial.print(";");
-  // Serial.print("Adjusted Voltage [mV], ADS1115 PH: ");
-  // Serial.print(probeVoltage, 12);
-  // Serial.print(";");
+  voltage = adc_ph.getResult_mV(); 
+  probeVoltage = voltage * 2; // Adjust for 10kΩ resistor
+  analogBuffer_ph[analogBufferIndex_ph] = probeVoltage;
+  analogBufferIndex_ph = (analogBufferIndex_ph + 1) % iterations;
 
-  analogBuffer[analogBufferIndex] = probeVoltage;
-  analogBufferIndex = (analogBufferIndex + 1) % iterations;
-
-  if (analogBufferCount < iterations) {
-    analogBufferCount++;
+  if (analogBufferCount_ph < iterations) {
+    analogBufferCount_ph++;
   }
 
-  if (analogBufferCount >= iterations) {
+  if (analogBufferCount_ph >= iterations) {
     float sortedBuffer[iterations];
-    std::copy(analogBuffer, analogBuffer + iterations, sortedBuffer);
+    std::copy(analogBuffer_ph, analogBuffer_ph + iterations, sortedBuffer);
     std::sort(sortedBuffer, sortedBuffer + iterations);
-    float medianValue;
-    if (iterations % 2 == 0)
-    {
-      medianValue = (sortedBuffer[iterations / 2 - 1] + sortedBuffer[iterations / 2]) / 2.0f;
-    }
-    else
-    {
-      medianValue = sortedBuffer[iterations / 2];
-    }
+    float medianValue = (iterations % 2 == 0)
+      ? (sortedBuffer[iterations / 2 - 1] + sortedBuffer[iterations / 2]) / 2.0f
+      : sortedBuffer[iterations / 2];
+
     Serial.println("****************BEGIN PH**********************");
     Serial.print("Median Value (mV): ");
     Serial.print(medianValue, 4);
-    Serial.print(";");
-    Serial.print("Median Value * 1/2 (mV): ");
-    Serial.print(medianValue/2, 4);
-    Serial.print(";");
+    Serial.print("; Median Value * 1/2 (mV): ");
+    Serial.print(medianValue / 2, 4);
+    Serial.print("; ");
     Serial.print(temperatureC);
-    Serial.print("ºC");
-    Serial.print(";");
+    Serial.print("ºC; ");
+
     if (1450 < medianValue && medianValue < 1600) {
       Serial.print("Neutral");
     } else if (900 < medianValue && medianValue < 1050) {
@@ -128,7 +121,7 @@ void loop() {
       Serial.print("Unknown");
     }
     Serial.println(";");
-    Serial.println("****************************"); 
+    Serial.println("****************************");
   }
 
   // probeVoltage = medianValue;
@@ -145,42 +138,48 @@ void loop() {
   // Serial.print("pHValue: ");
   // Serial.println(pHValue);
 	
-	// Serial.println("****************BEGIN TDS**********************");
-  // // BEGIN TDS
-  // // Build Tds Calibration code
-  // voltage = adc_tds.getResult_V(); // 10kOhm resistor present
-  // probeVoltage = voltage * 3.33457692; // multiply by 10kOhm factor, 1413 uS/cm factor
-  // Serial.print("Voltage [V], ADS1115 No 2: ");
-  // Serial.println(voltage, 12);
-  // Serial.print("Adjusted Voltage [V] using 1413 uS/cm factor, ADS1115 No 2: ");
-  // Serial.println(probeVoltage,12);
+  // BEGIN TDS
+  // Build Tds Calibration code
+  voltage = adc_tds.getResult_V(); // 10kOhm resistor present
+  probeVoltage = voltage * 4.46112; // multiply by 10kOhm factor, 1413 uS/cm factor
+  // To obtain the multiplier for the TDS probe, we need to measure the voltage of a known conductivity standard (1413 uS/cm)
+  // and adjust the voltage reading to match 1.73398 V -> this number is obtained by solving the function for EC = 1413.
   
-  // analogBuffer[analogBufferIndex] = probeVoltage;
-  // analogBufferIndex = (analogBufferIndex + 1) % iterations;
-  // float sortedBuffer[iterations];
-  // std::copy(analogBuffer, analogBuffer + iterations, sortedBuffer);
-  // std::sort(sortedBuffer, sortedBuffer + iterations);
-  // float medianValue;
-  // if (iterations % 2 == 0)
-  // {
-  //   medianValue = (sortedBuffer[iterations / 2 - 1] + sortedBuffer[iterations / 2]) / 2.0f;
-  // }
-  // else
-  // {
-  //   medianValue = sortedBuffer[iterations / 2];
-  // }
-  // for (int i = 0; i < iterations; i++)
-  //   {
-  //     Serial.print(sortedBuffer[i]);
-  //     Serial.print( " ");
-  //   }
-  // Serial.println("");
-  // Serial.print("Median Value: ");
-  // Serial.println(medianValue, 12);
-  // Serial.print("Median Value * 1/3.33457692: ");
-  // Serial.println(medianValue/3.33457692, 12);
-  // probeVoltage = medianValue;
+  analogBuffer_tds[analogBufferIndex_tds] = probeVoltage;
+  analogBufferIndex_tds = (analogBufferIndex_tds + 1) % iterations;
 
+  if (analogBufferCount_tds < iterations) {
+    analogBufferCount_tds++;
+  }
+
+  if (analogBufferCount_tds >= iterations) {
+    float sortedBuffer[iterations];
+    std::copy(analogBuffer_tds, analogBuffer_tds + iterations, sortedBuffer);
+    std::sort(sortedBuffer, sortedBuffer + iterations);
+    float medianValue = (iterations % 2 == 0)
+      ? (sortedBuffer[iterations / 2 - 1] + sortedBuffer[iterations / 2]) / 2.0f
+      : sortedBuffer[iterations / 2];
+
+    Serial.println("****************BEGIN TDS**********************");
+    Serial.print("Median Value (V): ");
+    Serial.print(medianValue, 12);
+    Serial.print("; Median Value * 1/4.46112 (V): ");
+    Serial.print(medianValue / 4.46112, 12);
+    Serial.print("; ");
+    Serial.print(temperatureC);
+    Serial.print("ºC; ");
+
+    if (0.001 < medianValue && medianValue < 0.09) {
+      Serial.print("Deionized Water");
+    } else if (1.5 < medianValue && medianValue < 1.9) {
+      Serial.print("Conductivity Standard");
+    } else {
+      Serial.print("Unknown");
+    }
+    Serial.println(";");
+    Serial.println("****************************");
+  }
+  // probeVoltage = medianValue;
   // float kCoefficient = 0.019;
   // float rawEC = (133.42 * probeVoltage * probeVoltage * probeVoltage - 255.86 * probeVoltage * probeVoltage + 857.39 * probeVoltage);
   // Serial.print("TDS before Temp Correction and fitting function: ");

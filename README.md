@@ -2,6 +2,8 @@
  
  This code relates to the research project topic _Development of an Open-Source Real-Time Water Quality Monitoring Device: A Modular Approach_.
 
+ [![DOI](https://zenodo.org/badge/931396380.svg)](https://doi.org/10.5281/zenodo.15364438)
+ 
  **General Notes:**
 
  - I also mainly use PlatformIO w/ Visual Studio Code to compile,

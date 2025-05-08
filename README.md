@@ -1,10 +1,10 @@
 # water-quality
  
- This code relates to the thesis project topic _Development of an Open-Source Real-Time Water Quality Monitoring Device: A Modular Approach_.
+ This code relates to the research project topic _Development of an Open-Source Real-Time Water Quality Monitoring Device: A Modular Approach_.
 
  **General Notes:**
 
- - I prefer to track issues here instead of in a document. I also mainly use PlatformIO w/ Visual Studio Code to compile,
+ - I also mainly use PlatformIO w/ Visual Studio Code to compile,
  although I use Arduino IDE as a companion tool.
 
 **Libraries Needed:**

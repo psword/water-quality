@@ -1,7 +1,7 @@
 /*
  * File: sensor_config.h
- * Description: Header file containing pin definitions, global variables, and configuration constants
- *              for the sensor monitoring system using ESP32.
+ * Description: Header file containing pin definitions, global variables, and configuration constants.
+ *              
  * Author: Philip
  */
 

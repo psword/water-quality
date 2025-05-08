@@ -4,7 +4,7 @@
  *              manages sensor operations using a state machine, and transmits data.
  *              The ESP32 enters deep sleep to conserve power between readings.
  * Author: Philip
- * Written for: ESP32 Dev Board
+ * Written for: LilyGo-T-SIM7000G
  */
 
 #include <Wire.h>                 // Wire Library for I2C communication

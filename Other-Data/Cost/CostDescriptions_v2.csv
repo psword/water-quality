@@ -6,24 +6,24 @@
 4.7K;0,490 €;10;4,90 €;SMD/SMT/THT;Resistor;Panasonic;ERA-6ARW472V;667-ERA-6ARW472V; -;Thin Film Resistors - SMD 0805 4.7Kohm 0.05% 10ppm AEC-Q200
 10K;0,248 €;10;2,48 €;SMD/SMT/THT;Resistor;Panasonic;ERJ-UP6D1002V;667-ERJ-UP6D1002V; -;Anti-Sulfurated Thick Film Chip Resistors/ Anti-Surge Type, Power Rating (W): 0.5, Chip Size (LxW(EIA)) (mm): 2.0 x 1.25 (EIA:0805), Resistance Values (?): 10000, Resistance Tolerance (%): 0.5, T.C.R (?102/K): ?100
 ADS;4,590 €;2;9,18 €;SMD/SMT/THT;Converter;Texas Instruments;ADS1115IDGST;595-ADS1115IDGST; -;16-Bit, 860SPS, 4-Ch Delta-Sigma ADC w/ PGA, Oscillator, Voltage Reference, Comparator & I2C
-DS18B20+;6,260 €;1;6,26 €;SMD/SMT/THT;Sensor;Analog Devices;DS18B20+;700-DS18B20+; -;"Board Mount Temperature Sensors Programmable Resolution 1-Wire Digital Thermometer, see https://www.mouser.fi/ProductDetail/Analog-Devices-Maxim-Integrated/DS18B20%2b?qs=7H2Jq%252ByxpJKegCKabDbglA%3D%3D"
+DS18B20+;6,260 €;1;6,26 €;SMD/SMT/THT;Sensor;Analog Devices;DS18B20+;700-DS18B20+; -;Board Mount Temperature Sensors Programmable Resolution 1-Wire Digital Thermometer, see https://www.mouser.fi/ProductDetail/Analog-Devices-Maxim-Integrated/DS18B20%2b?qs=7H2Jq%252ByxpJKegCKabDbglA%3D%3D
 RTC;14,910 €;1;14,91 €;SMD/SMT/THT;Clock;Maxim Integrated;DS3231SN# ;700-DS3231SN# ; -;Real-Time Clock
 RTCBATT;0,490 €;5;2,45 €;SMD/SMT/THT;Battery_Holder;MPD (MEMORY PROTECTION DEVICES);BK-912; -;BK-912-ND;BATTERY RETAINER COIN 20MM SMD
-4POS-JUMPER;0,170 €;10;1,70 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B4B-XH-A; -;455-B4B-XH-A-ND;"Connector Header Through Hole 4 position 0.098 (2.50mm) """
-4POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-4; -;455-2267-ND;"CONN RCPT HSG 4POS 2.50MM, 4 Rectangular Connectors - Housings Receptacle Natural 0.098"" (2.50mm)"
+4POS-JUMPER;0,170 €;10;1,70 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B4B-XH-A; -;455-B4B-XH-A-ND;Connector Header Through Hole 4 position 0.098 (2.50mm)
+4POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-4; -;455-2267-ND;CONN RCPT HSG 4POS 2.50MM, 4 Rectangular Connectors - Housings Receptacle Natural 0.098 (2.50mm)
 LILYGO-T-SIM7000G-JP1;1,540 €;10;15,40 €; -;Header;Harwin;M20-7821646 ;855-M20-7821646; -;Header-Straight-16 Position
-3POS-JUMPER;0,120 €;10;1,20 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B3B-XH-A; -;455-2248-ND;"Connector Header Through Hole 3 position 0.098"" (2.50mm)"
-3POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-3; -;455-2219-ND;"3 Rectangular Connectors - Housings Receptacle Natural 0.098"" (2.50mm)"
-5POS-JUMPER;0,200 €;10;2,00 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B5B-XH-A; -;455-B5B-XH-A-ND;"Connector Header Through Hole 5 position 0.098"" (2.50mm)"
-5POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-5; -;455-2268-ND;"5 Rectangular Connectors - Housings Receptacle Natural 0.098"" (2.50mm)"
-6POS-JUMPER;0,230 €;10;2,30 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B6B-XH-A; -;455-B6B-XH-A-ND;"Connector Header Through Hole 6 position 0.098"" (2.50mm)"
-6POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-6; -;455-2218-ND;"6 Rectangular Connectors - Housings Receptacle Natural 0.098"" (2.50mm)"
+3POS-JUMPER;0,120 €;10;1,20 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B3B-XH-A; -;455-2248-ND;Connector Header Through Hole 3 position 0.098 (2.50mm)
+3POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-3; -;455-2219-ND;3 Rectangular Connectors - Housings Receptacle Natural 0.098 (2.50mm)
+5POS-JUMPER;0,200 €;10;2,00 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B5B-XH-A; -;455-B5B-XH-A-ND;Connector Header Through Hole 5 position 0.098 (2.50mm)
+5POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-5; -;455-2268-ND;5 Rectangular Connectors - Housings Receptacle Natural 0.098 (2.50mm)
+6POS-JUMPER;0,230 €;10;2,30 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B6B-XH-A; -;455-B6B-XH-A-ND;Connector Header Through Hole 6 position 0.098 (2.50mm)
+6POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-6; -;455-2218-ND;6 Rectangular Connectors - Housings Receptacle Natural 0.098 (2.50mm)
 LILYGO-T-SIM7000G;45,000 €;1;45,00 €; -;Controller;LilyGo;T-SIM7000G; -; -;LilyGo T-7000G
-SENSOR-PH;61,660 €;1;61,66 €; -;Sensor;DFROBOT;SEN0249;426-SEN0249; -;"pH Sensor V2; https://www.mouser.fi/ProductDetail/DFRobot/SEN0169-V2?qs=yqaQSyyJnNi6FEZd1levOw%3D%3D"
-SENSOR-TDS;13,590 €;1;13,59 €; -;Sensor;Seeed Studio;101020753;713-101020753; -;"Grove TDS Sensor; https://www.mouser.fi/ProductDetail/Seeed-Studio/101020753?qs=sGAEpiMZZMu3sxpa5v1qrtBZTdlU4H0Zlhh2Dp6Jfk4%3D"
+SENSOR-PH;61,660 €;1;61,66 €; -;Sensor;DFROBOT;SEN0249;426-SEN0249; -;pH Sensor V2, see https://www.mouser.fi/ProductDetail/DFRobot/SEN0169-V2?qs=yqaQSyyJnNi6FEZd1levOw%3D%3D"
+SENSOR-TDS;13,590 €;1;13,59 €; -;Sensor;Seeed Studio;101020753;713-101020753; -;Grove TDS Sensor, see https://www.mouser.fi/ProductDetail/Seeed-Studio/101020753?qs=sGAEpiMZZMu3sxpa5v1qrtBZTdlU4H0Zlhh2Dp6Jfk4%3D
 ANALOG-ISOLATOR;28,650 €;2;57,30 €; -;Isolator;Atlas Scientific;#SRV-ISO; -;5016-SRV-ISO-ND;Atlas Surveyor™ Analog Isolator
 CYL BATT CONTACTS, 18650;2,550 €;2;5,10 €;SMD/SMT/THT;Battery_Holder;Keystone Electronics;1044;543-1044; -;Cylindrical Battery Contacts, Clips, Holders & Springs 18650 SOLDER TAIL BATTERY HOLDER
-TERMINAL BLOCK;6,290 €;5;31,45 €;SMD/SMT/THT;Connector;TE Connectivity AMP Connectors;282834-3; -;A98334-ND;"TERM BLK 3P SIDE ENT 2.54MM PCB, 	
-3 Position Wire to Board Terminal Block Horizontal with Board 0.100"" (2.54mm) Through Hole"
+TERMINAL BLOCK;6,290 €;5;31,45 €;SMD/SMT/THT;Connector;TE Connectivity AMP Connectors;282834-3; -;A98334-ND;TERM BLK 3P SIDE ENT 2.54MM PCB, 	
+3 Position Wire to Board Terminal Block Horizontal with Board 0.100 (2.54mm) Through Hole
 NPN-TRANSISTOR;0,247 €;5;1,24 €;SMD/SMT/THT;Transistor;onsemi/Fairchild;BC547BTF;512-BC547BTF; -;Bipolar Transistors - BJT NPN 45V 100mA HFE/450
-JUMPER-LEAD;0,583 €;25;14,57 €; -;Jumper_Lead;JST (JAPAN SOLDERLESS TERMINALS);ASXHSXH22K152; -;455-3240-ND;"Black 22 AWG Jumper Lead Socket to Socket Tin 6.00"" (152.40mm)"
+JUMPER-LEAD;0,583 €;25;14,57 €; -;Jumper_Lead;JST (JAPAN SOLDERLESS TERMINALS);ASXHSXH22K152; -;455-3240-ND;Black 22 AWG Jumper Lead Socket to Socket Tin 6.00 (152.40mm)

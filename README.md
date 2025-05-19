@@ -2,12 +2,29 @@
  
  This code relates to the research project topic _Development of an Open-Source Real-Time Water Quality Monitoring Device: A Modular Approach_.
 
+ Releases are linked here:
+
  [![DOI](https://zenodo.org/badge/931396380.svg)](https://doi.org/10.5281/zenodo.15364438)
  
  **General Notes:**
 
  - I also mainly use PlatformIO w/ Visual Studio Code to compile,
- although I use Arduino IDE as a companion tool.
+ although I use Arduino IDE as a companion tool. These tools are simply convenient.
+
+**Table of Contents:**  
+- Main Code (primarily for deployment):  
+_[Platform-IO-builds](/Platform-IO-builds)_
+  - [Calibration-specific code](Platform-IO-builds/Calibration-Script-Water-Quality)
+  - [Code to deploy measurement system](Platform-IO-builds/LilyGo-T-SIM7000G-Water-Quality)
+
+- Secondary Code (primarily for testing with second IDE):  
+_[Arduino-IDE-Testing](/Arduino-IDE-Testing)_  
+
+- Datasets, Analysis, Logs:  
+_[Other-Data](/Other-Data)_  
+_[Serial-Logs](/Serial-Logs)_  
+
+---
 
 **Libraries Needed:**
 	

@@ -12,18 +12,22 @@
  although I use Arduino IDE as a companion tool. These tools are simply convenient.
 
 **Table of Contents:**  
-- Main Code (primarily for deployment):  
-_[Platform-IO-builds](/Platform-IO-builds)_
+**Main Code (primarily for deployment):**  
+- _[Platform-IO-builds](/Platform-IO-builds)_
   - [Calibration-specific code](Platform-IO-builds/Calibration-Script-Water-Quality)
   - [Code to deploy measurement system](Platform-IO-builds/LilyGo-T-SIM7000G-Water-Quality)
 
-- Secondary Code (primarily for testing with second IDE):  
-_[Arduino-IDE-Testing](/Arduino-IDE-Testing)_  
+**Secondary Code (primarily for testing with second IDE):**  
+- _[Arduino-IDE-Testing](/Arduino-IDE-Testing)_  
 
-- Datasets, Analysis, Logs:  
-_[Other-Data](/Other-Data)_  
-_[Serial-Logs](/Serial-Logs)_  
-
+**Datasets, Analysis, Logs:**  
+- _[Serial-Logs](/Serial-Logs)_  
+- _[Other-Data](/Other-Data)_  
+  - [Parts Costs](Other-Data/Cost)  
+  - [Datasets from testing](Other-Data/Datasets)  
+  - [Electronics Schematics and Images](Other-Data/Schematics)  
+  - [GSM Module Specific Logs](Other-Data/sim-tests)
+    
 ---
 
 **Libraries Needed:**

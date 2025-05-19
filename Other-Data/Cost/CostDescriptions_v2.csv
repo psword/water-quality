@@ -19,7 +19,7 @@ LILYGO-T-SIM7000G-JP1;1,540 €;10;15,40 €; -;Header;Harwin;M20-7821646 ;855-M
 6POS-JUMPER;0,230 €;10;2,30 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B6B-XH-A; -;455-B6B-XH-A-ND;Connector Header Through Hole 6 position 0.098 (2.50mm)
 6POS-RECPT;0,100 €;10;1,00 €;SMD/SMT/THT;Receptacle;JST (JAPAN SOLDERLESS TERMINALS);XHP-6; -;455-2218-ND;6 Rectangular Connectors - Housings Receptacle Natural 0.098 (2.50mm)
 LILYGO-T-SIM7000G;45,000 €;1;45,00 €; -;Controller;LilyGo;T-SIM7000G; -; -;LilyGo T-7000G
-SENSOR-PH;61,660 €;1;61,66 €; -;Sensor;DFROBOT;SEN0249;426-SEN0249; -;pH Sensor V2, see https://www.mouser.fi/ProductDetail/DFRobot/SEN0169-V2?qs=yqaQSyyJnNi6FEZd1levOw%3D%3D"
+SENSOR-PH;61,660 €;1;61,66 €; -;Sensor;DFROBOT;SEN0249;426-SEN0249; -;pH Sensor V2, see https://www.mouser.fi/ProductDetail/DFRobot/SEN0169-V2?qs=yqaQSyyJnNi6FEZd1levOw%3D%3D
 SENSOR-TDS;13,590 €;1;13,59 €; -;Sensor;Seeed Studio;101020753;713-101020753; -;Grove TDS Sensor, see https://www.mouser.fi/ProductDetail/Seeed-Studio/101020753?qs=sGAEpiMZZMu3sxpa5v1qrtBZTdlU4H0Zlhh2Dp6Jfk4%3D
 ANALOG-ISOLATOR;28,650 €;2;57,30 €; -;Isolator;Atlas Scientific;#SRV-ISO; -;5016-SRV-ISO-ND;Atlas Surveyor™ Analog Isolator
 CYL BATT CONTACTS, 18650;2,550 €;2;5,10 €;SMD/SMT/THT;Battery_Holder;Keystone Electronics;1044;543-1044; -;Cylindrical Battery Contacts, Clips, Holders & Springs 18650 SOLDER TAIL BATTERY HOLDER

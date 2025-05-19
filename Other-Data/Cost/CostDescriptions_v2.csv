@@ -2,11 +2,11 @@
 0.1UF;0,237 €;10;2,37 €;SMD/SMT/THT;Capacitor;KEMET;C0805X104K8RACTU;80-C0805X104K8RACTU; -;SMD Comm X7R Flex, Ceramic, 0.1 uF, 10%, 10 VDC, 25 VDC, 125C, -55C, X7R, SMD, MLCC, FT-CAP, Temperature Stable, 5 % , 10 GOhms, 13 mg, 0805, 2mm, 1.25mm, 0.78mm, 0.75mm, 0.5mm, 4000, 78  Weeks, 80
 1.0K;0,240 €;10;2,40 €;SMD/SMT/THT;Resistor;Panasonic;ERA-8AEB102V;667-ERA-8AEB102V; -;Thin Film Resistors - SMD 1206 1.0Kohm 0.1% 25ppm
 2.4K;0,136 €;10;1,36 €;SMD/SMT/THT;Resistor;Panasonic;ERJ-UP6D2401V;667-ERJ-UP6D2401V; -;Thick Film Resistors - SMD 0805 Anti-sulfur 0.5W, 0.5%, 2.4KOhm AEC-Q200
-3.7V-LI-ION;6,170 €;1;6,17 €; -;Battery;XSTAR;18650-2600; -; -;"XTAR 18650 2600mAh 4.5A Battery; https://www.xtardirect.com/products/battery-18650-2600mah?VariantsId=10430"
+3.7V-LI-ION;6,170 €;1;6,17 €; -;Battery;XSTAR;18650-2600; -; -;XTAR 18650 2600mAh 4.5A Battery, see https://www.xtardirect.com/products/battery-18650-2600mah?VariantsId=10430
 4.7K;0,490 €;10;4,90 €;SMD/SMT/THT;Resistor;Panasonic;ERA-6ARW472V;667-ERA-6ARW472V; -;Thin Film Resistors - SMD 0805 4.7Kohm 0.05% 10ppm AEC-Q200
 10K;0,248 €;10;2,48 €;SMD/SMT/THT;Resistor;Panasonic;ERJ-UP6D1002V;667-ERJ-UP6D1002V; -;Anti-Sulfurated Thick Film Chip Resistors/ Anti-Surge Type, Power Rating (W): 0.5, Chip Size (LxW(EIA)) (mm): 2.0 x 1.25 (EIA:0805), Resistance Values (?): 10000, Resistance Tolerance (%): 0.5, T.C.R (?102/K): ?100
 ADS;4,590 €;2;9,18 €;SMD/SMT/THT;Converter;Texas Instruments;ADS1115IDGST;595-ADS1115IDGST; -;16-Bit, 860SPS, 4-Ch Delta-Sigma ADC w/ PGA, Oscillator, Voltage Reference, Comparator & I2C
-DS18B20+;6,260 €;1;6,26 €;SMD/SMT/THT;Sensor;Analog Devices;DS18B20+;700-DS18B20+; -;"Board Mount Temperature Sensors Programmable Resolution 1-Wire Digital Thermometer; https://www.mouser.fi/ProductDetail/Analog-Devices-Maxim-Integrated/DS18B20%2b?qs=7H2Jq%252ByxpJKegCKabDbglA%3D%3D"
+DS18B20+;6,260 €;1;6,26 €;SMD/SMT/THT;Sensor;Analog Devices;DS18B20+;700-DS18B20+; -;"Board Mount Temperature Sensors Programmable Resolution 1-Wire Digital Thermometer, see https://www.mouser.fi/ProductDetail/Analog-Devices-Maxim-Integrated/DS18B20%2b?qs=7H2Jq%252ByxpJKegCKabDbglA%3D%3D"
 RTC;14,910 €;1;14,91 €;SMD/SMT/THT;Clock;Maxim Integrated;DS3231SN# ;700-DS3231SN# ; -;Real-Time Clock
 RTCBATT;0,490 €;5;2,45 €;SMD/SMT/THT;Battery_Holder;MPD (MEMORY PROTECTION DEVICES);BK-912; -;BK-912-ND;BATTERY RETAINER COIN 20MM SMD
 4POS-JUMPER;0,170 €;10;1,70 €;SMD/SMT/THT;Header_Male;JST (JAPAN SOLDERLESS TERMINALS);B4B-XH-A; -;455-B4B-XH-A-ND;"Connector Header Through Hole 4 position 0.098 (2.50mm) """

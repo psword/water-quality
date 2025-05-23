@@ -1,0 +1,18 @@
+﻿Part;Price;Qty;Ext Price;Function;MANUFACTURER_PART_NUMBER;MOUSER_PART_NUMBER;DESCRIPTION
+1.0K;0,24 €;3;0,72 €;Resistor;ERA-8AEB102V;667-ERA-8AEB102V;Thin Film Resistors - SMD 1206 1.0Kohm 0.1% 25ppm
+10K;0,25 €;2;0,50 €;Resistor;ERJ-UP6D1002V;667-ERJ-UP6D1002V;Anti-Sulfurated Thick Film Chip Resistors/ Anti-Surge Type, Power Rating (W): 0.5, Chip Size (LxW(EIA)) (mm): 2.0 x 1.25 (EIA:0805), Resistance Values (?): 10000, Resistance Tolerance (%): 0.5, T.C.R (?102/K): ?100
+2.4K;0,14 €;2;0,27 €;Resistor;ERJ-UP6D2401V;667-ERJ-UP6D2401V;Thick Film Resistors - SMD 0805 Anti-sulfur 0.5W, 0.5%, 2.4KOhm AEC-Q200
+3.7V-LI-ION XTAR;6,17 €;1;6,17 €;Battery;18650-2600; -;"XTAR 18650 2600mAh 4.5A Battery; https://www.xtardirect.com/products/battery-18650-2600mah?VariantsId=10430"
+4.7K;0,49 €;1;0,49 €;Resistor;ERA-6ARW472V;667-ERA-6ARW472V;Thin Film Resistors - SMD 0805 4.7Kohm 0.05% 10ppm AEC-Q200
+ADS1115 Breakout;5,90 €;2;11,80 €;ADC;ADS1115; -;https://piikauppa.fi/kauppa/tarvikkeet/analogiset-ja-digitaaliset-muuntimet/ads1115-16-bittinen-adc/?srsltid=AfmBOorSowtlE_KmVx4rOQbX5PRsekKkhmqSB8P_h48sIORuOXynWkxc
+DS18B20 Waterproof;11,95 €;1;11,95 €;Sensor;SEN-18367; -;https://www.sparkfun.com/temperature-sensor-high-temperature-waterproof-ds18b20.html
+Jumper Wires Female-Female - 200mm x 40 (Silicone);9,45 €;1;9,45 €;Wiring;4447;485-4447;Jumper Wires Premium Silicone Covered Female-Female Jumper Wires - 200mm x 40
+Jumper Wires Male-Male - 200mm x 40 (Silicone);9,45 €;1;9,45 €;Wiring;4482;485-4482;Jumper Wires Premium Silicone Covered Male-Male Jumper Wires - 200mm x 40
+LILYGO-T-SIM7000G;36,36 €;1;36,36 €;Controller;T-SIM7000G; -;"LilyGo T-7000G; Lilygo.cc"
+NPN-TRANSISTOR;0,25 €;3;0,74 €;Transistor;BC547BTF;512-BC547BTF;Bipolar Transistors - BJT NPN 45V 100mA HFE/450
+RTC ZS-042;2,59 €;1;2,59 €;Clock;ZS-042 RTC; -;https://www.aliexpress.com/item/32985147642.html
+SENSOR-KIT-PH DFRobot v2.0;61,66 €;1;61,66 €;Sensor;SEN0249;426-SEN0249;"pH Sensor V2; https://www.mouser.fi/ProductDetail/DFRobot/SEN0169-V2?qs=yqaQSyyJnNi6FEZd1levOw%3D%3D"
+SENSOR-KIT-TDS Seeed;13,59 €;1;13,59 €;Sensor;101020753;713-101020753;"Grove TDS Sensor; https://www.mouser.fi/ProductDetail/Seeed-Studio/101020753?qs=sGAEpiMZZMu3sxpa5v1qrtBZTdlU4H0Zlhh2Dp6Jfk4%3D"
+Half-Size Breadboard;5,92;1;5,92 €;Breadboard;240-131;424-240-131;PCBs & Breadboards Half-Size Breadboard
+;;;;;;;
+Total (1 System, no analog isolation);;;171,66 €;;;;
